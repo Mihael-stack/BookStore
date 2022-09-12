@@ -2,8 +2,5 @@
     <persistence-unit name="educationManagementSystem" transaction-type="RESOURCE_LOCAL">
         <mapping-file>META-INF/queries.xml</mapping-file>
         <exclude-unlisted-classes/>
-        <properties>
-            <property name="hibernate.format_sql" value="true"/>
-        </properties>
     </persistence-unit>
 </persistence>

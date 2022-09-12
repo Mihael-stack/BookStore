@@ -10,6 +10,7 @@ public class Customer {
     private int id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String emailAddress;
 
     @ManyToOne
@@ -31,5 +32,41 @@ public class Customer {
                 ", lastName='" + lastName + '\'' +
                 ", emailAddress='" + emailAddress + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+    // TODO: FIX THIS ESCAPING REFERENCE
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
