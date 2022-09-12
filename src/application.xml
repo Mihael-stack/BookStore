@@ -38,5 +38,9 @@
     </bean>
     <tx:annotation-driven />
 
+    <!-- DAO Beans -->
+    <bean id="customerDao" class="com.mihael.BookStore.dao.CustomerDaoJPAProduction">
+        <constructor-arg ref="entityManagerFactory"/>
+    </bean>
 
 </beans>
