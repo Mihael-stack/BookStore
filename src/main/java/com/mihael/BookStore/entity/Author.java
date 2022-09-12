@@ -13,6 +13,9 @@ public class Author {
     @ManyToMany
     private Set<Book> booksWritten;
 
+    @ManyToOne
+    private Address address;
+
     // Hibernate needs an empty constructor
     public Author(){}
 
