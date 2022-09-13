@@ -1,6 +1,9 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
     <persistence-unit name="educationManagementSystem" transaction-type="RESOURCE_LOCAL">
         <mapping-file>META-INF/queries.xml</mapping-file>
-        <exclude-unlisted-classes/>
+        <class>com.mihael.BookStore.entity.Address</class>
+        <class>com.mihael.BookStore.entity.Author</class>
+        <class>com.mihael.BookStore.entity.Customer</class>
+        <class>com.mihael.BookStore.entity.Book</class>
     </persistence-unit>
 </persistence>

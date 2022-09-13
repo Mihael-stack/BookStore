@@ -1,16 +1,17 @@
 package com.mihael.BookStore.dao.author;
 
 import com.mihael.BookStore.entity.Author;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
-
+@Transactional
 public class AuthorDaoJPAProduction implements AuthorDao{
+    @PersistenceContext
     private EntityManager em;
 
-    public AuthorDaoJPAProduction(EntityManager em){
-        this.em = em;
-    }
     @Override
     public void addAuthor(Author author) {
         this.em.persist(author);
@@ -42,4 +43,5 @@ public class AuthorDaoJPAProduction implements AuthorDao{
         Author author = em.find(Author.class, removeAuthor.getId());
         this.em.remove(author);
     }
+
 }

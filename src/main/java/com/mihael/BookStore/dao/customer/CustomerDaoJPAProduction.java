@@ -1,18 +1,18 @@
 package com.mihael.BookStore.dao.customer;
 
 import com.mihael.BookStore.entity.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Transactional
 public class CustomerDaoJPAProduction implements CustomerDao{
-
+    @PersistenceContext
     private EntityManager em;
 
-    public CustomerDaoJPAProduction(EntityManager em){
-        this.em = em;
-    }
 
     @Override
     public void addCustomer(Customer customer) {
@@ -26,7 +26,7 @@ public class CustomerDaoJPAProduction implements CustomerDao{
 
     @Override
     public Customer findCustomerByEmail(String emailAddress) {
-        return (Customer)this.em.createQuery("SELECT customer FROM Customer as customer WHERE customer.id=:emailAddress")
+        return (Customer)this.em.createQuery("SELECT customer FROM Customer as customer WHERE customer.emailAddress=:emailAddress")
                 .setParameter("emailAddress",emailAddress).getSingleResult();
     }
 
@@ -45,4 +45,5 @@ public class CustomerDaoJPAProduction implements CustomerDao{
         // TODO: Update the address as well.
         // oldCustomer.setAddress();
     }
+
 }

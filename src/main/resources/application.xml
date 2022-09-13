@@ -13,16 +13,13 @@
         http://www.springframework.org/schema/aop
         https://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <!-- DataSource -->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/bookstore"/>
-        <property name="password" value="admin"/>
-        <property name="username" value="root" />
-    </bean>
-
     <!-- EntityManagerFactory bean -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan">
+            <list>
+                <value>com.mihael.BookStore.entity</value>
+            </list>
+        </property>
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
@@ -32,6 +29,14 @@
         </property>
     </bean>
 
+    <!-- DataSource -->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/bookstore"/>
+        <property name="password" value="admin"/>
+        <property name="username" value="root" />
+    </bean>
+
     <!-- Transaction manager bean -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
@@ -39,26 +44,15 @@
     <tx:annotation-driven />
 
     <!-- DAO Beans -->
-    <bean id="customerDao" class="com.mihael.BookStore.dao.customer.CustomerDaoJPAProduction">
-        <constructor-arg ref="entityManagerFactory"/>
-    </bean>
-    <bean id="bookDao" class="com.mihael.BookStore.dao.book.BookDaoJPAProduction">
-        <constructor-arg ref="entityManagerFactory"/>
-    </bean>
-    <bean id="authorDao" class="com.mihael.BookStore.dao.author.AuthorDaoJPAProduction">
-        <constructor-arg ref="entityManagerFactory"/>
-    </bean>
-    <bean id="addressDao" class="com.mihael.BookStore.dao.address.AddressDaoJPAProduction">
-        <constructor-arg ref="entityManagerFactory"/>
-    </bean>
+    <bean id="customerDao" class="com.mihael.BookStore.dao.customer.CustomerDaoJPAProduction" />
+    <bean id="bookDao" class="com.mihael.BookStore.dao.book.BookDaoJPAProduction" />
+    <bean id="authorDao" class="com.mihael.BookStore.dao.author.AuthorDaoJPAProduction" />
+    <bean id="addressDao" class="com.mihael.BookStore.dao.address.AddressDaoJPAProduction"/>
 
     <!-- SERVICE Beans -->
-    <bean id="customerManagementService" class="com.mihael.BookStore.services.customer.CustomerManagementServiceProductionImpl">
-        <constructor-arg ref="customerDao"/>
-        <constructor-arg ref="addressManagementService"/>
-    </bean>
-    <bean id="addressManagementService" class="com.mihael.BookStore.services.address.AddressManagementServiceProductionImpl">
-        <constructor-arg ref="addressDao"/>
-    </bean>
+    <bean id="customerManagementService" class="com.mihael.BookStore.services.customer.CustomerManagementServiceProductionImpl" />
+    <bean id="addressManagementService" class="com.mihael.BookStore.services.address.AddressManagementServiceProductionImpl" />
+
+    <context:component-scan base-package="com.mihael.BookStore"/>
 
 </beans>

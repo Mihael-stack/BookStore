@@ -1,16 +1,17 @@
 package com.mihael.BookStore.dao.book;
 
 import com.mihael.BookStore.entity.Book;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+@Transactional
 public class BookDaoJPAProduction implements BookDao{
-
+    @PersistenceContext
     private EntityManager em;
 
-    public BookDaoJPAProduction(EntityManager em){
-        this.em = em;
-    }
 
     @Override
     public void addBook(Book book) {
@@ -40,4 +41,5 @@ public class BookDaoJPAProduction implements BookDao{
     public void removeBook(Book removeBook) {
 
     }
+
 }

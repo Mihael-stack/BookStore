@@ -1,15 +1,17 @@
 package com.mihael.BookStore.dao.address;
 
 import com.mihael.BookStore.entity.Address;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+@Transactional
 public class AddressDaoJPAProduction implements AddressDao{
+    @PersistenceContext
     private EntityManager em;
 
-    public AddressDaoJPAProduction(EntityManager em){
-        this.em = em;
-    }
     @Override
     public Address addAddress(Address address) {
         this.em.persist(address);
