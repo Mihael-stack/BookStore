@@ -33,4 +33,41 @@ public class Author {
                 ", alias='" + alias + '\'' +
                 '}';
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public void setBooksWritten(Set<Book> booksWritten) {
+        this.booksWritten.clear();
+        this.booksWritten.addAll(booksWritten);
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+    // TODO: FIX THE ESCAPING REFERENCE
+    public Address getAddress() {
+        return address;
+    }
+    public Set<Book> getBooksWritten() {
+        return booksWritten;
+    }
+
 }
