@@ -48,5 +48,8 @@
     <bean id="authorDao" class="com.mihael.BookStore.dao.AuthorDaoJPAProduction">
         <constructor-arg ref="entityManagerFactory"/>
     </bean>
+    <bean id="addressDao" class="com.mihael.BookStore.dao.AddressDaoJPAProduction">
+        <constructor-arg ref="entityManagerFactory"/>
+    </bean>
 
 </beans>
