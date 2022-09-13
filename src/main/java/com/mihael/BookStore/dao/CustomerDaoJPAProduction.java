@@ -1,9 +1,11 @@
 package com.mihael.BookStore.dao;
 
 import com.mihael.BookStore.entity.Customer;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+@Transactional
 public class CustomerDaoJPAProduction implements CustomerDao{
 
     private EntityManager em;

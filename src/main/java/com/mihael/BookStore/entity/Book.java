@@ -31,4 +31,32 @@ public class Book {
                 ", title='" + title + '\'' +
                 '}';
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+    // TODO: FIX THIS ESCAPING REFERENCE
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
 }
