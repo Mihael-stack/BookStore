@@ -52,4 +52,13 @@
         <constructor-arg ref="entityManagerFactory"/>
     </bean>
 
+    <!-- SERVICE Beans -->
+    <bean id="customerManagementService" class="com.mihael.BookStore.services.customer.CustomerManagementServiceProductionImpl">
+        <constructor-arg ref="customerDao"/>
+        <constructor-arg ref="addressManagementService"/>
+    </bean>
+    <bean id="addressManagementService" class="com.mihael.BookStore.services.address.AddressManagementServiceProductionImpl">
+        <constructor-arg ref="addressDao"/>
+    </bean>
+
 </beans>
