@@ -1,4 +1,4 @@
-package com.mihael.BookStore.dao;
+package com.mihael.BookStore.dao.book;
 
 import com.mihael.BookStore.entity.Book;
 

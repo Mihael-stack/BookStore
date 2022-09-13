@@ -1,7 +1,6 @@
-package com.mihael.BookStore.dao;
+package com.mihael.BookStore.dao.author;
 
 import com.mihael.BookStore.entity.Author;
-import com.mihael.BookStore.entity.Book;
 
 import javax.persistence.EntityManager;
 import java.util.List;

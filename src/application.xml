@@ -39,16 +39,16 @@
     <tx:annotation-driven />
 
     <!-- DAO Beans -->
-    <bean id="customerDao" class="com.mihael.BookStore.dao.CustomerDaoJPAProduction">
+    <bean id="customerDao" class="com.mihael.BookStore.dao.customer.CustomerDaoJPAProduction">
         <constructor-arg ref="entityManagerFactory"/>
     </bean>
-    <bean id="bookDao" class="com.mihael.BookStore.dao.BookDaoJPAProduction">
+    <bean id="bookDao" class="com.mihael.BookStore.dao.book.BookDaoJPAProduction">
         <constructor-arg ref="entityManagerFactory"/>
     </bean>
-    <bean id="authorDao" class="com.mihael.BookStore.dao.AuthorDaoJPAProduction">
+    <bean id="authorDao" class="com.mihael.BookStore.dao.author.AuthorDaoJPAProduction">
         <constructor-arg ref="entityManagerFactory"/>
     </bean>
-    <bean id="addressDao" class="com.mihael.BookStore.dao.AddressDaoJPAProduction">
+    <bean id="addressDao" class="com.mihael.BookStore.dao.address.AddressDaoJPAProduction">
         <constructor-arg ref="entityManagerFactory"/>
     </bean>
 
