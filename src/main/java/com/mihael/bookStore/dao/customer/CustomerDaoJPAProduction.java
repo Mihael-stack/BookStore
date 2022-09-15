@@ -1,8 +1,6 @@
-package com.mihael.BookStore.dao.customer;
+package com.mihael.bookStore.dao.customer;
 
-import com.mihael.BookStore.entity.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import com.mihael.bookStore.entity.Customer;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;

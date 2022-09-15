@@ -1,8 +1,8 @@
-package com.mihael.BookStore.client;
+package com.mihael.bookStore.client;
 
-import com.mihael.BookStore.entity.Address;
-import com.mihael.BookStore.entity.Customer;
-import com.mihael.BookStore.services.customer.CustomerManagementService;
+import com.mihael.bookStore.entity.Address;
+import com.mihael.bookStore.entity.Customer;
+import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Client {

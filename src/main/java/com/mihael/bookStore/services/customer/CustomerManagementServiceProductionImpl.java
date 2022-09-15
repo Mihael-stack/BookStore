@@ -1,11 +1,9 @@
-package com.mihael.BookStore.services.customer;
+package com.mihael.bookStore.services.customer;
 
-import com.mihael.BookStore.dao.customer.CustomerDao;
-import com.mihael.BookStore.dao.customer.CustomerDaoJPAProduction;
-import com.mihael.BookStore.entity.Address;
-import com.mihael.BookStore.entity.Customer;
-import com.mihael.BookStore.services.address.AddressManagementService;
-import com.mihael.BookStore.services.address.AddressManagementServiceProductionImpl;
+import com.mihael.bookStore.dao.customer.CustomerDao;
+import com.mihael.bookStore.entity.Address;
+import com.mihael.bookStore.entity.Customer;
+import com.mihael.bookStore.services.address.AddressManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 

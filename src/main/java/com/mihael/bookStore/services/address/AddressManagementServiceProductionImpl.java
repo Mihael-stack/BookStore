@@ -1,8 +1,7 @@
-package com.mihael.BookStore.services.address;
+package com.mihael.bookStore.services.address;
 
-import com.mihael.BookStore.dao.address.AddressDao;
-import com.mihael.BookStore.dao.address.AddressDaoJPAProduction;
-import com.mihael.BookStore.entity.Address;
+import com.mihael.bookStore.dao.address.AddressDao;
+import com.mihael.bookStore.entity.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,7 +1,6 @@
-package com.mihael.BookStore.dao.address;
+package com.mihael.bookStore.dao.address;
 
-import com.mihael.BookStore.entity.Address;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import com.mihael.bookStore.entity.Address;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
