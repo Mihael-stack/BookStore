@@ -9,11 +9,17 @@
         </Console>
     </Appenders>
     <Loggers>
-        <logger name="org.springframework.orm.jpa.JpaTransactionManager" level="TRACE" additivity="false">
+        <logger name="org.springframework.orm.jpa.JpaTransactionManager" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
         </logger>
+        <logger name="org.apache.commons.dbcp2.BasicDataSource" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+        </logger>
+        <logger name="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+        </logger>
 
-        <Root level="DEBUG">
+        <Root level="ERROR">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
