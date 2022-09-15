@@ -44,14 +44,19 @@
     <tx:annotation-driven />
 
     <!-- DAO Beans -->
-    <bean id="customerDao" class="com.mihael.bookStore.dao.customer.CustomerDaoJPAProduction" />
-    <bean id="bookDao" class="com.mihael.bookStore.dao.book.BookDaoJPAProduction" />
-    <bean id="authorDao" class="com.mihael.bookStore.dao.author.AuthorDaoJPAProduction" />
+    <bean id="customerDao" class="com.mihael.bookStore.dao.customer.CustomerDaoJPAProduction"/>
+    <bean id="bookDao" class="com.mihael.bookStore.dao.book.BookDaoJPAProduction"/>
+    <bean id="authorDao" class="com.mihael.bookStore.dao.author.AuthorDaoJPAProduction"/>
     <bean id="addressDao" class="com.mihael.bookStore.dao.address.AddressDaoJPAProduction"/>
 
     <!-- SERVICE Beans -->
-    <bean id="customerManagementService" class="com.mihael.bookStore.services.customer.CustomerManagementServiceProductionImpl" />
-    <bean id="addressManagementService" class="com.mihael.bookStore.services.address.AddressManagementServiceProductionImpl" />
+    <bean id="customerManagementService" class="com.mihael.bookStore.services.customer.CustomerManagementServiceProductionImpl">
+        <constructor-arg name="dao" ref="customerDao"/>
+        <constructor-arg name="addressService" ref="addressManagementService"/>
+    </bean>
+    <bean id="addressManagementService" class="com.mihael.bookStore.services.address.AddressManagementServiceProductionImpl">
+        <constructor-arg name="dao" ref="addressDao"/>
+    </bean>
 
     <context:component-scan base-package="com.mihael.bookStore"/>
 

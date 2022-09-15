@@ -11,7 +11,6 @@ public class CustomerDaoJPAProduction implements CustomerDao{
     @PersistenceContext
     private EntityManager em;
 
-
     @Override
     public void addCustomer(Customer customer) {
         this.em.persist(customer);

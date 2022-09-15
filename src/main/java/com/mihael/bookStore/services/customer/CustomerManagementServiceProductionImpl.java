@@ -4,15 +4,20 @@ import com.mihael.bookStore.dao.customer.CustomerDao;
 import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Customer;
 import com.mihael.bookStore.services.address.AddressManagementService;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class CustomerManagementServiceProductionImpl implements CustomerManagementService{
-    @Autowired
+//    @Autowired
     private CustomerDao dao;
-    @Autowired
+//    @Autowired
     private AddressManagementService addressService;
+
+    public CustomerManagementServiceProductionImpl(CustomerDao dao, AddressManagementService addressService){
+        this.dao = dao;
+        this.addressService = addressService;
+    }
 
     @Override
     public void addNewCustomer(Customer customer) {
