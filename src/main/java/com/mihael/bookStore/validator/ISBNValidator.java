@@ -32,7 +32,7 @@ public abstract class ISBNValidator {
         else throw new ISBNIsInvalidException("The provided ISBN is invalid");
     }
 
-    public static boolean checkIfISBN13IsValid(String ISBN){
+    public static boolean checkIfISBN13IsValid(String ISBN){ // Reminder - Needs to be called together with ISBNFormatted
         char[] split = ISBN.toCharArray();
         int result = 0;
         int count = 1;
@@ -43,16 +43,18 @@ public abstract class ISBNValidator {
             else{
                 if(count % 2 == 0){
                     result += Integer.parseInt(String.valueOf(c)) * 3;
+                    count++;
                 }
                 else{
                     result += Integer.parseInt(String.valueOf(c));
+                    count++;
                 }
             }
-            count++;
+
         }
         int finalResult  = result % 10;
 
-        return result == 0;
+        return finalResult == 0;
     }
 
 
