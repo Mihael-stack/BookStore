@@ -3,7 +3,7 @@ package com.mihael.bookStore.validator;
 import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 
 public abstract class ISBNValidator {
-    public String formattingISBN(String isbn){
+    public static String formattingISBN(String isbn){
         char[] split = isbn.toCharArray();
         StringBuilder newISBN = new StringBuilder();
         for(char c : split){
@@ -13,21 +13,50 @@ public abstract class ISBNValidator {
         }
         return newISBN.toString();
     }
-    public void checkISBN(String isbn) throws ISBNIsInvalidException {
+    public static String checkISBN(String isbn) throws ISBNIsInvalidException {
         String formattedISBN = formattingISBN(isbn);
         if(formattedISBN.length() == 10){
-            boolean isISBNCorrect = checkIfISBN10IsValidAndConvertItToISBN13(formattedISBN);
+            boolean isISBNCorrect = checkIfISBN10IsValid(formattedISBN);
             if(isISBNCorrect){
-                //TODO: convert it to ISBN13
+                //TODO: convert it to ISBN13 - If there is not a second version of commons validator, manually write the method
+                return org.apache.commons.validator.routines.ISBNValidator.getInstance().convertToISBN13(formattedISBN);
             }
             else{
-                throw new ISBNIsInvalidException();
+                throw new ISBNIsInvalidException("The provided ISBN-10 is an invalid ISBN");
             }
         }
+        if(formattedISBN.length() == 13){
+            if(checkIfISBN13IsValid(formattedISBN)) return formattedISBN;
+            else throw new ISBNIsInvalidException("The provided ISBN-13 is an invalid ISBN");
+        }
+        else throw new ISBNIsInvalidException("The provided ISBN is invalid");
+    }
+
+    public static boolean checkIfISBN13IsValid(String ISBN){
+        char[] split = ISBN.toCharArray();
+        int result = 0;
+        int count = 1;
+        for(char c : split){
+            if(!Character.isDigit(c)){
+                return false;
+            }
+            else{
+                if(count % 2 == 0){
+                    result += Integer.parseInt(String.valueOf(c)) * 3;
+                }
+                else{
+                    result += Integer.parseInt(String.valueOf(c));
+                }
+            }
+            count++;
+        }
+        int finalResult  = result % 10;
+
+        return result == 0;
     }
 
 
-    public static boolean checkIfISBN10IsValidAndConvertItToISBN13(String ISBN){
+    public static boolean checkIfISBN10IsValid(String ISBN){
         char[] split = ISBN.toCharArray();
         int count = 10;
         int result = 0;
@@ -43,7 +72,6 @@ public abstract class ISBNValidator {
             }
         }
         int finalResult = result%11;
-        if(finalResult == 0) return true;
-        else return false;
+        return finalResult == 0;
     }
 }

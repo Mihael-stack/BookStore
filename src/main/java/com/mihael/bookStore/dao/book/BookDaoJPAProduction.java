@@ -1,6 +1,7 @@
 package com.mihael.bookStore.dao.book;
 
 import com.mihael.bookStore.entity.Book;
+import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -29,7 +30,7 @@ public class BookDaoJPAProduction implements BookDao{
     }
 
     @Override
-    public void updateBook(Book newBook) {
+    public void updateBook(Book newBook) throws ISBNIsInvalidException {
         Book oldBook = this.em.find(Book.class, newBook.getId());
         oldBook.setISBN(newBook.getISBN());
         oldBook.setTitle(newBook.getTitle());

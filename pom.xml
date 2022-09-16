@@ -121,6 +121,15 @@
             <version>5.3.22</version>
         </dependency>
 
+        <!-- DEPENDENCY FOR ISBN-10 to ISBN-13 CONVERSION -->
+        <!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+        <!-- TODO: Check for newer version of commons validator-->
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.7</version>
+        </dependency>
+
 
     </dependencies>
 

@@ -1,5 +1,8 @@
 package com.mihael.bookStore.entity;
 
+import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
+import com.mihael.bookStore.validator.ISBNValidator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -19,8 +22,8 @@ public class Book {
     //Hibernate needs an empty constructor
     public Book(){}
 
-    public Book(String ISBN, String title){
-        this.ISBN = ISBN;
+    public Book(String ISBN, String title) throws ISBNIsInvalidException {
+        this.ISBN = ISBNValidator.checkISBN(ISBN);
         this.title = title;
         this.authors = new HashSet<>();
     }
@@ -51,8 +54,8 @@ public class Book {
         return authors;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setISBN(String ISBN) throws ISBNIsInvalidException {
+        this.ISBN = ISBNValidator.checkISBN(ISBN);
     }
 
     public void setTitle(String title) {
