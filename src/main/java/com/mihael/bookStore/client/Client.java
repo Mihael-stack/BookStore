@@ -8,7 +8,7 @@ import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Client {
-    public static void main(String[] args) throws CustomerNotFoundException, CustomerAlreadyExistWithProvidedEmailException {
+    public static void main(String[] args) {
         ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
         CustomerManagementService customerService = container.getBean("customerManagementService",CustomerManagementService.class);
         Customer customer1 = new Customer("Ben","Ten","benTen@mail.com");
@@ -17,9 +17,11 @@ public class Client {
         try {
             customerService.addNewCustomerWithAddress(customer1,address1);
         }
-        catch (CustomerAlreadyExistWithProvidedEmailException e){
+        catch (org.springframework.dao.DataIntegrityViolationException e){
             System.out.println(e);
-        }
+        } // The Exception is not being caught because the way hibernate works, it flags the persist method when called
+        // but it does not execute it, it only does when the transaction commit is being done, by then it bypassed all my
+        // Exception handling and then crashes. It only catches the exception outside of the service method, the client.
 
 
     }

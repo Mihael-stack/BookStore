@@ -63,9 +63,13 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     @Transactional(rollbackFor = CustomerAlreadyExistWithProvidedEmailException.class)
     @Override
     public void addNewCustomerWithAddress(Customer customer, Address address) throws CustomerAlreadyExistWithProvidedEmailException {
-        addressService.addNewAddress(address);
-        customer.setAddress(address);
-        dao.addCustomer(customer);
+        try {
+            addressService.addNewAddress(address);
+            customer.setAddress(address);
+            dao.addCustomer(customer);
+        }catch (CustomerAlreadyExistWithProvidedEmailException e){
+            throw new CustomerAlreadyExistWithProvidedEmailException();
+        }
     }
 
 

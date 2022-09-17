@@ -46,7 +46,7 @@ class CustomerManagementServiceProductionImplTest {
     }
 
     @Test
-    void testAddingNewCustomerWithExisingEmail() throws CustomerAlreadyExistWithProvidedEmailException {
+    void testAddingNewCustomerWithExisingEmail() {
         Customer customer1 = new Customer("Ben","Ten","benTen@mail.com");
         Address address1 = new Address("1 BStreet","Belgrade","Serbia","ASS-22221","Serbia");
         Customer customer2 = new Customer("Namda","Mamba","namdaMamba@mail.com");

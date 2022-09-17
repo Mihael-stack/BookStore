@@ -3,6 +3,7 @@ package com.mihael.bookStore.dao.customer;
 import com.mihael.bookStore.entity.Customer;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -14,11 +15,11 @@ public class CustomerDaoJPAProduction implements CustomerDao{
     private EntityManager em;
 
     @Override
-    public void addCustomer(Customer customer) throws CustomerAlreadyExistWithProvidedEmailException {
+    public void addCustomer(Customer customer) {
         try {
             this.em.persist(customer);
-        }catch (org.springframework.dao.DataIntegrityViolationException e){
-            throw new CustomerAlreadyExistWithProvidedEmailException("Customer already exist with provided email.");
+        }catch (CustomerAlreadyExistWithProvidedEmailException e){
+            throw new CustomerAlreadyExistWithProvidedEmailException();
         }
     }
 
