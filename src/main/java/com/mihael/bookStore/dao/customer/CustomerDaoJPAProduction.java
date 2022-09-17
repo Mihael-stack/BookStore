@@ -1,6 +1,8 @@
 package com.mihael.bookStore.dao.customer;
 
 import com.mihael.bookStore.entity.Customer;
+import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
+import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -12,19 +14,31 @@ public class CustomerDaoJPAProduction implements CustomerDao{
     private EntityManager em;
 
     @Override
-    public void addCustomer(Customer customer) {
-        this.em.persist(customer);
+    public void addCustomer(Customer customer) throws CustomerAlreadyExistWithProvidedEmailException {
+        try {
+            this.em.persist(customer);
+        }catch (org.springframework.dao.DataIntegrityViolationException e){
+            throw new CustomerAlreadyExistWithProvidedEmailException("Customer already exist with provided email.");
+        }
     }
 
     @Override
-    public Customer findCustomerById(int id) {
-        return this.em.find(Customer.class,id);
+    public Customer findCustomerById(int id) throws CustomerNotFoundException {
+        Customer customer = this.em.find(Customer.class, id);
+        if(customer == null){
+            throw new CustomerNotFoundException("Exception was thrown because query returned null, CustomerDaoJPAProduction.class");
+        }else return customer;
     }
 
     @Override
-    public Customer findCustomerByEmail(String emailAddress) {
-        return (Customer)this.em.createQuery("SELECT customer FROM Customer as customer WHERE customer.emailAddress=:emailAddress")
-                .setParameter("emailAddress",emailAddress).getSingleResult();
+    public Customer findCustomerByEmail(String emailAddress) throws CustomerNotFoundException {
+        try {
+            return (Customer) this.em.createQuery("SELECT customer FROM Customer as customer WHERE customer.emailAddress=:emailAddress")
+                    .setParameter("emailAddress", emailAddress).getSingleResult();
+        }
+        catch (javax.persistence.NoResultException e){
+            throw new CustomerNotFoundException("Costumer not found. The costumer was deleted or you have a typo in your search parameters");
+        }
     }
 
     @Override
@@ -39,8 +53,6 @@ public class CustomerDaoJPAProduction implements CustomerDao{
         oldCustomer.setEmailAddress(newCustomer.getEmailAddress());
         oldCustomer.setFirstName(newCustomer.getFirstName());
         oldCustomer.setLastName(newCustomer.getLastName());
-        // TODO: Update the address as well.
-        // oldCustomer.setAddress();
     }
 
 }

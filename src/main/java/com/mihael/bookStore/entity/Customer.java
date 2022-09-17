@@ -23,6 +23,7 @@ public class Customer {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
+        this.address = null;
     }
 
     @Override

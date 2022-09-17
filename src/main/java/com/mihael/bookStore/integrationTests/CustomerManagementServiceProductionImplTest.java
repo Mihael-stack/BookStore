@@ -2,6 +2,8 @@ package com.mihael.bookStore.integrationTests;
 
 import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Customer;
+import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
+import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +23,7 @@ class CustomerManagementServiceProductionImplTest {
 
 
     @Test
-    void findCustomerByEmail() {
+    void findCustomerByEmail() throws CustomerNotFoundException, CustomerAlreadyExistWithProvidedEmailException {
         //arrange
         Customer customer1 = new Customer("Mike","O'Harra","MikeMail@mail.com");
         Address address1 = new Address("21 Street","London","England","AW-221","United Kingdom");
@@ -44,7 +46,26 @@ class CustomerManagementServiceProductionImplTest {
     }
 
     @Test
-    void updateCustomerWithAddress() {
+    void testAddingNewCustomerWithExisingEmail() throws CustomerAlreadyExistWithProvidedEmailException {
+        Customer customer1 = new Customer("Ben","Ten","benTen@mail.com");
+        Address address1 = new Address("1 BStreet","Belgrade","Serbia","ASS-22221","Serbia");
+        Customer customer2 = new Customer("Namda","Mamba","namdaMamba@mail.com");
+        Address address2 = new Address("105 Ave","Barcelona","Spain","2064","Spain");
+        Customer customer3 = new Customer("Steve","Bobber","steveBobber@mail.com");
+        Address address3 = new Address("21 Other","Macedonia","Ohio","142","United States");
+
+
+        assertThrows(CustomerAlreadyExistWithProvidedEmailException.class, () -> {
+            customerService.addNewCustomerWithAddress(customer1,address1);
+        });
+        assertThrows(CustomerAlreadyExistWithProvidedEmailException.class, () -> {
+            customerService.addNewCustomerWithAddress(customer2,address2);
+        });        assertThrows(CustomerAlreadyExistWithProvidedEmailException.class, () -> {
+            customerService.addNewCustomerWithAddress(customer3, address3);
+        });
+    }
+    @Test
+    void updateCustomerWithAddress() throws CustomerNotFoundException {
 
 
         Customer newCustomer1 = new Customer("Mihael","Stoilkovski","mihael.stoilkovski@mail.com");
@@ -83,10 +104,34 @@ class CustomerManagementServiceProductionImplTest {
                 "city=Colorado Springs, country=Colorado, postalCode=12121212, state=United States}}",findCustomer3.toString());
 
     }
-
     @Test
-    void removeCustomer() {
-        fail();
+    void testFindingNonExistentCustomerById() throws CustomerNotFoundException {
+        assertThrows(CustomerNotFoundException.class, () -> {
+            Customer findCustomer1 = customerService.findCustomerById(55);
+        });
+        assertThrows(CustomerNotFoundException.class, () -> {
+            Customer findCustomer2 = customerService.findCustomerById(66);
+        });        assertThrows(CustomerNotFoundException.class, () -> {
+            Customer findCustomer3 = customerService.findCustomerById(77);
+        });
+
     }
+    @Test
+    void testFindingNonExistentCustomerByEmail() throws CustomerNotFoundException {
+        assertThrows(CustomerNotFoundException.class, () -> {
+            Customer findCustomer1 = customerService.findCustomerByEmail("garbage email");
+        });
+        assertThrows(CustomerNotFoundException.class, () -> {
+            Customer findCustomer2 = customerService.findCustomerByEmail("non-existent email");
+        });        assertThrows(CustomerNotFoundException.class, () -> {
+            Customer findCustomer3 = customerService.findCustomerByEmail("been coding for too long... email");
+        });
+
+    }
+
+//    @Test
+//    void removeCustomer() {
+//        fail();
+//    }
 
 }
