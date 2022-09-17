@@ -43,14 +43,50 @@ class CustomerManagementServiceProductionImplTest {
 
     }
 
-//    @Test
-//    void updateCustomer() {
-//
-//    }
+    @Test
+    void updateCustomerWithAddress() {
 
-//    @Test
-//    void removeCustomer() {
-//        fail();
-//    }
+
+        Customer newCustomer1 = new Customer("Mihael","Stoilkovski","mihael.stoilkovski@mail.com");
+        Address newAddress1 = new Address("2B Street","Skopje","North Macedonia","1000","North Macedonia");
+        Customer newCustomer2 = new Customer("Raven","Black","raven.black@mail.com");
+        Address newAddress2 = new Address("16th Avenue","Bucharest","Romania","10991","Romania");
+        Customer newCustomer3 = new Customer("Sam","Carter","stargate.command@mail.com");
+        Address newAddress3 = new Address("cheyenne mountain","Colorado Springs","Colorado","12121212","United States");
+
+        // TODO: Fix this - Find the id's by other means, because id's will change when you delete database and start over
+        newCustomer1.setId(2);
+        newCustomer2.setId(4);
+        newCustomer3.setId(6);
+        newAddress1.setId(1);
+        newAddress2.setId(3);
+        newAddress3.setId(5);
+
+        customerService.updateCustomerWithAddress(newCustomer1,newAddress1);
+        customerService.updateCustomerWithAddress(newCustomer2,newAddress2);
+        customerService.updateCustomerWithAddress(newCustomer3,newAddress3);
+
+        Customer findCustomer1 = customerService.findCustomerById(2);
+        Customer findCustomer2 = customerService.findCustomerById(4);
+        Customer findCustomer3 = customerService.findCustomerById(6);
+
+        assertEquals("Customer{firstName=Mihael, lastName=Stoilkovski, " +
+                "emailAddress=mihael.stoilkovski@mail.com, address=Address{street=2B Street, " +
+                "city=Skopje, country=North Macedonia, postalCode=1000, state=North Macedonia}}",findCustomer1.toString());
+
+        assertEquals("Customer{firstName=Raven, lastName=Black, " +
+                "emailAddress=raven.black@mail.com, address=Address{street=16th Avenue, " +
+                "city=Bucharest, country=Romania, postalCode=10991, state=Romania}}",findCustomer2.toString());
+
+        assertEquals("Customer{firstName=Sam, lastName=Carter, " +
+                "emailAddress=stargate.command@mail.com, address=Address{street=cheyenne mountain, " +
+                "city=Colorado Springs, country=Colorado, postalCode=12121212, state=United States}}",findCustomer3.toString());
+
+    }
+
+    @Test
+    void removeCustomer() {
+        fail();
+    }
 
 }

@@ -19,4 +19,8 @@ public class AddressManagementServiceProductionImpl implements AddressManagement
         return dao.addAddress(address);
     }
 
+    @Override
+    public void updateAddress(Address newAddress) {
+        this.dao.updateAddress(newAddress);
+    }
 }

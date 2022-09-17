@@ -8,6 +8,7 @@ public interface CustomerManagementService {
     Customer findCustomerById(int id);
     Customer findCustomerByEmail(String email);
     void updateCustomer(Customer newCustomer);
+    void updateCustomerWithAddress(Customer newCustomer, Address newAddress);
     void removeCustomer(Customer removeCustomer);
     void addNewCustomerWithAddress(Customer customer, Address address);
 }

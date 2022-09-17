@@ -30,17 +30,20 @@ public class Address {
     @Override
     public String toString() {
         return "Address{" +
-                "id=" + id +
-                ", street='" + street + '\'' +
-                ", city='" + city + '\'' +
-                ", country='" + country + '\'' +
-                ", postalCode='" + postalCode + '\'' +
-                ", state='" + state + '\'' +
+                "street=" + street +
+                ", city=" + city +
+                ", country=" + country +
+                ", postalCode=" + postalCode +
+                ", state=" + state +
                 '}';
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getStreet() {

@@ -35,6 +35,11 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     @Override
     public void updateCustomer(Customer newCustomer) {
         dao.updateCustomer(newCustomer);
+
+    }
+    public void updateCustomerWithAddress(Customer newCustomer, Address newAddress) {
+        addressService.updateAddress(newAddress);
+        dao.updateCustomer(newCustomer);
     }
 
     @Override
