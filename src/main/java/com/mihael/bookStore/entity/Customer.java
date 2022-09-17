@@ -39,6 +39,10 @@ public class Customer {
     public int getId() {
         return id;
     }
+    //Reminder : -setId- is only for testing purposes
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

@@ -1,6 +1,7 @@
-package com.mihael.bookStore.validator;
+package com.mihael.bookStore.validatorTest;
 
 import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
+import com.mihael.bookStore.validator.ISBNValidator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

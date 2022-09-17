@@ -9,9 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class CustomerManagementServiceProductionImpl implements CustomerManagementService{
-//    @Autowired
     private CustomerDao dao;
-//    @Autowired
     private AddressManagementService addressService;
 
     public CustomerManagementServiceProductionImpl(CustomerDao dao, AddressManagementService addressService){

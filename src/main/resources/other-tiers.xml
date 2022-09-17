@@ -50,6 +50,8 @@
         <constructor-arg name="dao" ref="addressDao"/>
     </bean>
 
+
+    <!-- Using Autowire for Integration Tests! -->
     <context:component-scan base-package="com.mihael.bookStore"/>
 
 </beans>
