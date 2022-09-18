@@ -1,6 +1,6 @@
 package com.mihael.bookStore.exceptions;
 
-public class CustomerAlreadyExistWithProvidedEmailException extends org.springframework.dao.DataIntegrityViolationException{
+public class CustomerAlreadyExistWithProvidedEmailException extends Exception{
 
     public CustomerAlreadyExistWithProvidedEmailException(){
         super("Customer with same email already exists!");

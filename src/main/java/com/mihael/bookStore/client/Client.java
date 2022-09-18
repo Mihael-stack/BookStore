@@ -6,6 +6,7 @@ import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailExce
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
 
 public class Client {
     public static void main(String[] args) {
@@ -17,7 +18,7 @@ public class Client {
         try {
             customerService.addNewCustomerWithAddress(customer1,address1);
         }
-        catch (org.springframework.dao.DataIntegrityViolationException e){
+        catch (DataIntegrityViolationException | CustomerAlreadyExistWithProvidedEmailException e){
             System.out.println(e);
         } // The Exception is not being caught because the way hibernate works, it flags the persist method when called
         // but it does not execute it, it only does when the transaction commit is being done, by then it bypassed all my

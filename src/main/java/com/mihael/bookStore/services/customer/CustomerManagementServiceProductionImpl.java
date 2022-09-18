@@ -7,6 +7,7 @@ import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailExce
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 import com.mihael.bookStore.services.address.AddressManagementService;
 //import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -60,15 +61,15 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     public void removeCustomer(Customer removeCustomer) {
         dao.deleteCustomer(removeCustomer);
     }
-    @Transactional(rollbackFor = CustomerAlreadyExistWithProvidedEmailException.class)
+    @Transactional(rollbackFor = DataIntegrityViolationException.class)
     @Override
     public void addNewCustomerWithAddress(Customer customer, Address address) throws CustomerAlreadyExistWithProvidedEmailException {
         try {
             addressService.addNewAddress(address);
             customer.setAddress(address);
             dao.addCustomer(customer);
-        }catch (CustomerAlreadyExistWithProvidedEmailException e){
-            throw new CustomerAlreadyExistWithProvidedEmailException();
+        }catch (DataIntegrityViolationException | CustomerAlreadyExistWithProvidedEmailException e){
+            throw new CustomerAlreadyExistWithProvidedEmailException(e.toString());
         }
     }
 
