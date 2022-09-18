@@ -30,7 +30,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     }
 
     @Override
-    public Customer findCustomerById(int id) throws CustomerNotFoundException {
+    public Customer findCustomerById(Long id) throws CustomerNotFoundException {
         try {
             return dao.findCustomerById(id);
         }catch (CustomerNotFoundException e){
@@ -58,8 +58,12 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     }
 
     @Override
-    public void removeCustomer(Customer removeCustomer) {
-        dao.deleteCustomer(removeCustomer);
+    public void removeCustomer(Customer removeCustomer) throws CustomerNotFoundException {
+        dao.deleteCustomerByEmail(removeCustomer);
+    }
+    public void removeAddressFromCustomer(Customer customer, Address address){
+        customer.setAddress(null);
+        addressService.deleteAddress(address);
     }
     @Transactional(rollbackFor = DataIntegrityViolationException.class)
     @Override
@@ -68,7 +72,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
             addressService.addNewAddress(address);
             customer.setAddress(address);
             dao.addCustomer(customer);
-        }catch (DataIntegrityViolationException | CustomerAlreadyExistWithProvidedEmailException e){
+        }catch (CustomerAlreadyExistWithProvidedEmailException e){
             throw new CustomerAlreadyExistWithProvidedEmailException(e.toString());
         }
     }

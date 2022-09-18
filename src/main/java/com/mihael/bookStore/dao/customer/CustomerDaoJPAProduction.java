@@ -5,6 +5,7 @@ import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailExce
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -15,6 +16,7 @@ public class CustomerDaoJPAProduction implements CustomerDao{
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional(rollbackFor = {CustomerAlreadyExistWithProvidedEmailException.class, DataIntegrityViolationException.class})
     @Override
     public void addCustomer(Customer customer) throws CustomerAlreadyExistWithProvidedEmailException {
         try {
@@ -25,7 +27,7 @@ public class CustomerDaoJPAProduction implements CustomerDao{
     }
 
     @Override
-    public Customer findCustomerById(int id) throws CustomerNotFoundException {
+    public Customer findCustomerById(Long id) throws CustomerNotFoundException {
         Customer customer = this.em.find(Customer.class, id);
         if(customer == null){
             throw new CustomerNotFoundException("Exception was thrown because query returned null, CustomerDaoJPAProduction.class");
@@ -44,9 +46,15 @@ public class CustomerDaoJPAProduction implements CustomerDao{
     }
 
     @Override
-    public void deleteCustomer(Customer customer) {
-        Customer persisCustomer = this.em.find(Customer.class, customer.getId());
+    public void deleteCustomerById(Customer customer) throws CustomerNotFoundException {
+            Customer persisCustomer = findCustomerById(customer.getId());
+            this.em.remove(persisCustomer);
+    }
+    @Override
+    public void deleteCustomerByEmail(Customer customer) throws CustomerNotFoundException {
+        Customer persisCustomer = findCustomerByEmail(customer.getEmailAddress());
         this.em.remove(persisCustomer);
+        //java.lang.IllegalArgumentException:
     }
 
     @Override

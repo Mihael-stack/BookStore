@@ -2,28 +2,27 @@ package com.mihael.bookStore.client;
 
 import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Customer;
+import com.mihael.bookStore.exceptions.AddressNotFoundException;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
+import com.mihael.bookStore.services.address.AddressManagementService;
 import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
 
 public class Client {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CustomerNotFoundException, AddressNotFoundException {
         ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
         CustomerManagementService customerService = container.getBean("customerManagementService",CustomerManagementService.class);
-        Customer customer1 = new Customer("Ben","Ten","benTen@mail.com");
-        Address address1 = new Address("1 BStreet","Belgrade","Serbia","ASS-22221","Serbia");
+        AddressManagementService addressService = container.getBean("addressManagementService", AddressManagementService.class);
 
-        try {
-            customerService.addNewCustomerWithAddress(customer1,address1);
-        }
-        catch (DataIntegrityViolationException | CustomerAlreadyExistWithProvidedEmailException e){
+        Customer findCustomer1 = customerService.findCustomerById(2L);
+        try{
+            Address findAddress1 = addressService.findAddress(55L);
+            System.out.println(findAddress1);
+        }catch (AddressNotFoundException e){
             System.out.println(e);
-        } // The Exception is not being caught because the way hibernate works, it flags the persist method when called
-        // but it does not execute it, it only does when the transaction commit is being done, by then it bypassed all my
-        // Exception handling and then crashes. It only catches the exception outside of the service method, the client.
-
+        }
 
     }
 

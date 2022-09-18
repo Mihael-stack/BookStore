@@ -2,13 +2,14 @@ package com.mihael.bookStore.integrationTests;
 
 import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Customer;
+import com.mihael.bookStore.exceptions.AddressNotFoundException;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
+import com.mihael.bookStore.services.address.AddressManagementService;
 import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerManagementServiceProductionImplTest {
     @Autowired
     private CustomerManagementService customerService;
+    @Autowired
+    private AddressManagementService addressService;
 
 
     @Test
@@ -84,20 +87,20 @@ class CustomerManagementServiceProductionImplTest {
         Address newAddress3 = new Address("cheyenne mountain","Colorado Springs","Colorado","12121212","United States");
 
         // TODO: Fix this - Find the id's by other means, because id's will change when you delete database and start over
-        newCustomer1.setId(2);
-        newCustomer2.setId(4);
-        newCustomer3.setId(6);
-        newAddress1.setId(1);
-        newAddress2.setId(3);
-        newAddress3.setId(5);
+        newCustomer1.setId(2L);
+        newCustomer2.setId(4L);
+        newCustomer3.setId(6L);
+        newAddress1.setId(1L);
+        newAddress2.setId(3L);
+        newAddress3.setId(5L);
 
         customerService.updateCustomerWithAddress(newCustomer1,newAddress1);
         customerService.updateCustomerWithAddress(newCustomer2,newAddress2);
         customerService.updateCustomerWithAddress(newCustomer3,newAddress3);
 
-        Customer findCustomer1 = customerService.findCustomerById(2);
-        Customer findCustomer2 = customerService.findCustomerById(4);
-        Customer findCustomer3 = customerService.findCustomerById(6);
+        Customer findCustomer1 = customerService.findCustomerById(2L);
+        Customer findCustomer2 = customerService.findCustomerById(4L);
+        Customer findCustomer3 = customerService.findCustomerById(6L);
 
         assertEquals("Customer{firstName=Mihael, lastName=Stoilkovski, " +
                 "emailAddress=mihael.stoilkovski@mail.com, address=Address{street=2B Street, " +
@@ -115,12 +118,12 @@ class CustomerManagementServiceProductionImplTest {
     @Test
     void testFindingNonExistentCustomerById() throws CustomerNotFoundException {
         assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer1 = customerService.findCustomerById(55);
+            Customer findCustomer1 = customerService.findCustomerById(55L);
         });
         assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer2 = customerService.findCustomerById(66);
+            Customer findCustomer2 = customerService.findCustomerById(66L);
         });        assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer3 = customerService.findCustomerById(77);
+            Customer findCustomer3 = customerService.findCustomerById(77L);
         });
 
     }
@@ -137,9 +140,51 @@ class CustomerManagementServiceProductionImplTest {
 
     }
 
-//    @Test
-//    void removeCustomer() {
-//        fail();
-//    }
+    @Test
+    void removeCustomer() throws CustomerNotFoundException {
+        Customer customer1 = new Customer("Ben","Ten","benTen@mail.com");
+        Address address1 = new Address("1 BStreet","Belgrade","Serbia","ASS-22221","Serbia");
+        Customer customer2 = new Customer("Namda","Mamba","namdaMamba@mail.com");
+        Address address2 = new Address("105 Ave","Barcelona","Spain","2064","Spain");
+        Customer customer3 = new Customer("Steve","Bobber","steveBobber@mail.com");
+        Address address3 = new Address("21 Other","Macedonia","Ohio","142","United States");
+
+        customerService.removeCustomer(customer1);
+        customerService.removeCustomer(customer2);
+        customerService.removeCustomer(customer3);
+
+        assertThrows(CustomerNotFoundException.class, () -> {
+            Customer findCustomer1 = customerService.findCustomerByEmail("benTen@mail.com");
+        });
+        assertThrows(CustomerNotFoundException.class, () -> {
+            Customer findCustomer2 = customerService.findCustomerByEmail("namdaMamba@mail.com");
+        });        assertThrows(CustomerNotFoundException.class, () -> {
+            Customer findCustomer3 = customerService.findCustomerByEmail("steveBobber@mail.com");
+        });
+    }
+
+    @Test
+    void removeAddressFromCustomer() throws CustomerNotFoundException, AddressNotFoundException {
+        Customer customer1 = customerService.findCustomerById(2L);
+        Address address1 = addressService.findAddress(1L);
+        Customer customer2 = customerService.findCustomerById(4L);
+        Address address2 = addressService.findAddress(3L);
+        Customer customer3 = customerService.findCustomerById(6L);
+        Address address3 = addressService.findAddress(5L);
+
+        customerService.removeAddressFromCustomer(customer1, address1);
+        customerService.removeAddressFromCustomer(customer2, address2);
+        customerService.removeAddressFromCustomer(customer3, address3);
+
+        assertThrows(AddressNotFoundException.class, () -> {
+            Address Faddress1 = addressService.findAddress(1L);
+        });
+        assertThrows(AddressNotFoundException.class, () -> {
+            Address Faddress2 = addressService.findAddress(3L);
+        });        assertThrows(AddressNotFoundException.class, () -> {
+            Address Faddress3 = addressService.findAddress(5L);
+
+        });
+    }
 
 }

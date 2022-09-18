@@ -8,7 +8,7 @@ import java.util.Set;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String name;
     private String alias;
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -34,7 +34,7 @@ public class Author {
                 '}';
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

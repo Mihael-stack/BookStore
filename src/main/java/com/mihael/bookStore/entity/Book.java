@@ -12,7 +12,7 @@ import java.util.Set;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String ISBN;
     private String title;
 
@@ -38,7 +38,7 @@ public class Book {
                 '}';
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

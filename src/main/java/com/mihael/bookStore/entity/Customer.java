@@ -7,13 +7,13 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     @Column(unique = true)
     private String emailAddress;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Address address;
 
     //Hibernate needs an empty constructor
@@ -36,11 +36,11 @@ public class Customer {
                 '}';
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
     //Reminder : -setId- is only for testing purposes
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
