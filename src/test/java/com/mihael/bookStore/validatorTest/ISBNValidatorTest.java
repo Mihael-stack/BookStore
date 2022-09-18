@@ -93,36 +93,16 @@ class ISBNValidatorTest {
         String isbn9 = "978-9-5473-8321-4";
         String isbn10 = "978-5-2065-8522-8";
         //act-assert
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn1);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn2);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn3);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn4);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn5);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn6);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn7);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn8);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn9);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn10);
-        });
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn1));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn2));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn3));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn4));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn5));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn6));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn7));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn8));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn9));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn10));
     }
 
     @Test
@@ -206,35 +186,15 @@ class ISBNValidatorTest {
         String isbn9 = "0--5502-X";
         String isbn10 = "123123-----";
         //act-assert
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn1);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn2);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn3);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn4);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn5);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn6);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn7);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn8);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn9);
-        });
-        assertThrows(ISBNIsInvalidException.class, () ->{
-            ISBNValidator.checkISBN(isbn10);
-        });
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn1));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn2));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn3));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn4));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn5));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn6));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn7));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn8));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn9));
+        assertThrows(ISBNIsInvalidException.class, () -> ISBNValidator.checkISBN(isbn10));
     }
 }

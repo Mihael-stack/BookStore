@@ -1,9 +1,7 @@
 package com.mihael.bookStore.integrationTests;
 
 import com.mihael.bookStore.entity.Address;
-import com.mihael.bookStore.entity.Customer;
 import com.mihael.bookStore.exceptions.AddressNotFoundException;
-import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 import com.mihael.bookStore.services.address.AddressManagementService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,16 +29,9 @@ class AddressManagementServiceProductionImplTest {
         addressService.deleteAddress(address2);
         addressService.deleteAddress(address3);
 
-        assertThrows(AddressNotFoundException.class, () -> {
-            Address findAddress1 = addressService.findAddress(1L);
-        });
-        assertThrows(AddressNotFoundException.class, () -> {
-            Address findAddress2 = addressService.findAddress(3L);
-        });
-        assertThrows(AddressNotFoundException.class, () -> {
-            Address findAddress3 = addressService.findAddress(5L);
-
-        });
+        assertThrows(AddressNotFoundException.class, () -> addressService.findAddress(1L));
+        assertThrows(AddressNotFoundException.class, () -> addressService.findAddress(3L));
+        assertThrows(AddressNotFoundException.class, () -> addressService.findAddress(5L));
     }
 
     @Test
@@ -59,14 +50,8 @@ class AddressManagementServiceProductionImplTest {
 
     @Test
     void findNonExistentAddress(){
-        assertThrows(AddressNotFoundException.class, () -> {
-            Address findAddress1 = addressService.findAddress(55L);
-        });
-        assertThrows(AddressNotFoundException.class, () -> {
-            Address findAddress2 = addressService.findAddress(66L);
-        });
-        assertThrows(AddressNotFoundException.class, () -> {
-            Address findAddress3 = addressService.findAddress(77L);
-        });
+        assertThrows(AddressNotFoundException.class, () -> addressService.findAddress(55L));
+        assertThrows(AddressNotFoundException.class, () -> addressService.findAddress(66L));
+        assertThrows(AddressNotFoundException.class, () -> addressService.findAddress(77L));
     }
 }

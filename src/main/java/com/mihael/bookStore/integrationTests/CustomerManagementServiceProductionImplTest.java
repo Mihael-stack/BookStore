@@ -116,51 +116,33 @@ class CustomerManagementServiceProductionImplTest {
 
     }
     @Test
-    void testFindingNonExistentCustomerById() throws CustomerNotFoundException {
-        assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer1 = customerService.findCustomerById(55L);
-        });
-        assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer2 = customerService.findCustomerById(66L);
-        });        assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer3 = customerService.findCustomerById(77L);
-        });
+    void testFindingNonExistentCustomerById() {
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findCustomerById(55L));
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findCustomerById(66L));
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findCustomerById(77L));
 
     }
     @Test
-    void testFindingNonExistentCustomerByEmail() throws CustomerNotFoundException {
-        assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer1 = customerService.findCustomerByEmail("garbage email");
-        });
-        assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer2 = customerService.findCustomerByEmail("non-existent email");
-        });        assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer3 = customerService.findCustomerByEmail("been coding for too long... email");
-        });
+    void testFindingNonExistentCustomerByEmail() {
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findCustomerByEmail("garbage email"));
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findCustomerByEmail("non-existent email"));
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findCustomerByEmail("been coding for too long... email"));
 
     }
 
     @Test
     void removeCustomer() throws CustomerNotFoundException {
         Customer customer1 = new Customer("Ben","Ten","benTen@mail.com");
-        Address address1 = new Address("1 BStreet","Belgrade","Serbia","ASS-22221","Serbia");
         Customer customer2 = new Customer("Namda","Mamba","namdaMamba@mail.com");
-        Address address2 = new Address("105 Ave","Barcelona","Spain","2064","Spain");
         Customer customer3 = new Customer("Steve","Bobber","steveBobber@mail.com");
-        Address address3 = new Address("21 Other","Macedonia","Ohio","142","United States");
 
         customerService.removeCustomer(customer1);
         customerService.removeCustomer(customer2);
         customerService.removeCustomer(customer3);
 
-        assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer1 = customerService.findCustomerByEmail("benTen@mail.com");
-        });
-        assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer2 = customerService.findCustomerByEmail("namdaMamba@mail.com");
-        });        assertThrows(CustomerNotFoundException.class, () -> {
-            Customer findCustomer3 = customerService.findCustomerByEmail("steveBobber@mail.com");
-        });
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findCustomerByEmail("benTen@mail.com"));
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findCustomerByEmail("namdaMamba@mail.com"));
+        assertThrows(CustomerNotFoundException.class, () -> customerService.findCustomerByEmail("steveBobber@mail.com"));
     }
 
     @Test
@@ -176,15 +158,9 @@ class CustomerManagementServiceProductionImplTest {
         customerService.removeAddressFromCustomer(customer2, address2);
         customerService.removeAddressFromCustomer(customer3, address3);
 
-        assertThrows(AddressNotFoundException.class, () -> {
-            Address Faddress1 = addressService.findAddress(1L);
-        });
-        assertThrows(AddressNotFoundException.class, () -> {
-            Address Faddress2 = addressService.findAddress(3L);
-        });        assertThrows(AddressNotFoundException.class, () -> {
-            Address Faddress3 = addressService.findAddress(5L);
-
-        });
+        assertThrows(AddressNotFoundException.class, () -> addressService.findAddress(1L));
+        assertThrows(AddressNotFoundException.class, () -> addressService.findAddress(3L));
+        assertThrows(AddressNotFoundException.class, () -> addressService.findAddress(5L));
     }
 
 }

@@ -7,11 +7,13 @@ import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailExce
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 import com.mihael.bookStore.services.address.AddressManagementService;
 import com.mihael.bookStore.services.customer.CustomerManagementService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.dao.DataIntegrityViolationException;
 
 public class Client {
-    public static void main(String[] args) throws CustomerNotFoundException, AddressNotFoundException {
+    static Log logger = LogFactory.getLog(Client.class);
+    public static void main(String[] args) throws CustomerNotFoundException {
         ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
         CustomerManagementService customerService = container.getBean("customerManagementService",CustomerManagementService.class);
         AddressManagementService addressService = container.getBean("addressManagementService", AddressManagementService.class);
@@ -21,12 +23,13 @@ public class Client {
             Address findAddress1 = addressService.findAddress(55L);
             System.out.println(findAddress1);
         }catch (AddressNotFoundException e){
-            System.out.println(e);
+            logger.warn("An Exception has been caught! -----  " ,e);
+            e.printStackTrace();
         }
 
     }
 
-    public void creatingCustomersWithAddress() throws CustomerNotFoundException, CustomerAlreadyExistWithProvidedEmailException {
+    public void creatingCustomersWithAddress() throws CustomerAlreadyExistWithProvidedEmailException {
         ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
         CustomerManagementService customerService = container.getBean("customerManagementService",CustomerManagementService.class);
 
@@ -49,7 +52,8 @@ public class Client {
             System.out.println(findCustomer3.toString());
         }
         catch (CustomerNotFoundException e){
-            System.out.println(e);
+            logger.warn("An Exception has been caught! -----  " ,e);
+            e.printStackTrace();
         }
 
 

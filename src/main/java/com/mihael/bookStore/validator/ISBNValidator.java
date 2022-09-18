@@ -43,12 +43,11 @@ public abstract class ISBNValidator {
             else{
                 if(count % 2 == 0){
                     result += Integer.parseInt(String.valueOf(c)) * 3;
-                    count++;
                 }
                 else{
                     result += Integer.parseInt(String.valueOf(c));
-                    count++;
                 }
+                count++;
             }
 
         }

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class AddressManagementServiceProductionImpl implements AddressManagementService{
-//    @Autowired
+
     private AddressDao dao;
 
     public AddressManagementServiceProductionImpl(AddressDao dao){
@@ -16,8 +16,8 @@ public class AddressManagementServiceProductionImpl implements AddressManagement
     }
 
     @Override
-    public Address addNewAddress(Address address) {
-        return dao.addAddress(address);
+    public void addNewAddress(Address address) {
+        dao.addAddress(address);
     }
 
     @Override
