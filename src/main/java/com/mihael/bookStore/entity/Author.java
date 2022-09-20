@@ -1,6 +1,7 @@
 package com.mihael.bookStore.entity;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -59,16 +60,25 @@ public class Author {
         this.booksWritten.clear();
         this.booksWritten.addAll(booksWritten);
     }
+    public void addBooksWritten(Book book){
+        this.booksWritten.add(book);
+    }
 
     public void setAddress(Address address) {
         this.address = address;
     }
-    // TODO: FIX THE ESCAPING REFERENCE
-    public Address getAddress() {
+
+    public Address getAddress() { // Use this method only if you are going to change values
         return address;
     }
-    public Set<Book> getBooksWritten() {
-        return booksWritten;
+
+    public AddressReadOnly getAddressReadOnly(){ // Use this if you are not going ot change values
+        return address;
     }
+
+    public Set<Book> getBooksWrittenUnmodifiable() { // Unmodifiable set
+        return Collections.unmodifiableSet(booksWritten);
+    }
+
 
 }

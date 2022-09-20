@@ -4,6 +4,7 @@ import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 import com.mihael.bookStore.validator.ISBNValidator;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -49,9 +50,9 @@ public class Book {
     public String getTitle() {
         return title;
     }
-    // TODO: FIX THIS ESCAPING REFERENCE
-    public Set<Author> getAuthors() {
-        return authors;
+
+    public Set<Author> getAuthorsUnmodifiable() { // Unmodifiable Set
+        return Collections.unmodifiableSet(authors);
     }
 
     public void setISBN(String ISBN) throws ISBNIsInvalidException {
@@ -62,8 +63,13 @@ public class Book {
         this.title = title;
     }
 
+
     public void setAuthors(Set<Author> authors) {
+        authors.clear();
         this.authors = authors;
+    }
+    public void addAuthor(Author author){
+        this.authors.add(author);
     }
 
     @Override
