@@ -55,8 +55,11 @@ public class Customer {
     public String getEmailAddress() {
         return emailAddress;
     }
-    // TODO: FIX THIS ESCAPING REFERENCE
     public Address getAddress() {
+        return address;
+    } // Use this only if you need to change values of the Address
+
+    public AddressReadOnly getAddressReadOnly() { // This is a read only Address
         return address;
     }
 

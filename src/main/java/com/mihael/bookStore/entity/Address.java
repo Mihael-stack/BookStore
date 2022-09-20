@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Address {
+public class Address implements AddressReadOnly{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

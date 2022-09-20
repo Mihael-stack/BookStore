@@ -14,7 +14,7 @@ public class Author {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Book> booksWritten;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Address address;
 
     // Hibernate needs an empty constructor
@@ -24,6 +24,7 @@ public class Author {
         this.name = name;
         this.alias = alias;
         this.booksWritten = new HashSet<>();
+        this.address = null;
     }
 
     @Override
