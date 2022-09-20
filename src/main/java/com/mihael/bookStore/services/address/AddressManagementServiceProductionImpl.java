@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AddressManagementServiceProductionImpl implements AddressManagementService{
 
-    private AddressDao dao;
+    private final AddressDao dao;
 
     public AddressManagementServiceProductionImpl(AddressDao dao){
         this.dao = dao;

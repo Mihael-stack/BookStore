@@ -49,6 +49,18 @@
     <bean id="addressManagementService" class="com.mihael.bookStore.services.address.AddressManagementServiceProductionImpl">
         <constructor-arg name="dao" ref="addressDao"/>
     </bean>
+    <bean id="authorManagementService" class="com.mihael.bookStore.services.author.AuthorManagementServiceProductionImpl">
+        <constructor-arg name="dao" ref="authorDao"/>
+        <constructor-arg name="addressService" ref="addressManagementService" />
+    </bean>
+    <bean id="bookManagementService" class="com.mihael.bookStore.services.book.BookManagementServiceProductionImpl">
+        <constructor-arg name="dao" ref="bookDao"/>
+    </bean>
+    <bean id="bookAndAuthorManagementService"
+          class="com.mihael.bookStore.services.bookAndAuthorManagementService.BookAndAuthorManagementServiceProductionImpl">
+        <constructor-arg name="bookService" ref="bookManagementService" />
+        <constructor-arg name="authorService" ref="authorManagementService" />
+    </bean>
 
 
     <!-- Using Autowire for Integration Tests! -->

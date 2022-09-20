@@ -6,33 +6,47 @@ import com.mihael.bookStore.entity.Customer;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 import com.mihael.bookStore.services.address.AddressManagementService;
-//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class CustomerManagementServiceProductionImpl implements CustomerManagementService{
-    private CustomerDao dao;
-    private AddressManagementService addressService;
+    private final CustomerDao dao;
+    private final AddressManagementService addressService;
 
     public CustomerManagementServiceProductionImpl(CustomerDao dao, AddressManagementService addressService){
         this.dao = dao;
         this.addressService = addressService;
     }
-    @Transactional(rollbackFor = CustomerAlreadyExistWithProvidedEmailException.class)
+    @Transactional(rollbackFor = {CustomerAlreadyExistWithProvidedEmailException.class, DataIntegrityViolationException.class})
     @Override
     public void addNewCustomer(Customer customer) throws CustomerAlreadyExistWithProvidedEmailException {
-        try {
+        try {// TODO: Try to handel it in the controller
             dao.addCustomer(customer);
-        }catch (CustomerAlreadyExistWithProvidedEmailException e){
-            throw new CustomerAlreadyExistWithProvidedEmailException(e.toString());
+        }catch (CustomerAlreadyExistWithProvidedEmailException | DataIntegrityViolationException e){
+            throw new CustomerAlreadyExistWithProvidedEmailException("Email Already Exists!, AddNewCustomer-CustomerManagementService");
         }
+
+    }
+
+    @Transactional(rollbackFor = {CustomerAlreadyExistWithProvidedEmailException.class, DataIntegrityViolationException.class})
+    @Override
+    public void addNewCustomerWithAddress(Customer customer, Address address) throws CustomerAlreadyExistWithProvidedEmailException {
+        try { // TODO: Try to handel it in the controller
+            this.addressService.addNewAddress(address);
+            customer.setAddress(address);
+            this.dao.addCustomer(customer);
+        }catch (CustomerAlreadyExistWithProvidedEmailException | DataIntegrityViolationException e){
+            throw new CustomerAlreadyExistWithProvidedEmailException("Email Already Exists!, AddNewCustomerWithAddress-CustomerManagementService");
+
+        }
+
     }
 
     @Override
     public Customer findCustomerById(Long id) throws CustomerNotFoundException {
         try {
-            return dao.findCustomerById(id);
+            return this.dao.findCustomerById(id);
         }catch (CustomerNotFoundException e){
             throw new CustomerNotFoundException(e.toString());
         }
@@ -41,7 +55,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     @Override
     public Customer findCustomerByEmail(String email) throws CustomerNotFoundException {
         try{
-            return dao.findCustomerByEmail(email);
+            return this.dao.findCustomerByEmail(email);
         }catch (CustomerNotFoundException e){
             throw new CustomerNotFoundException(e.toString());
         }
@@ -49,34 +63,21 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
 
     @Override
     public void updateCustomer(Customer newCustomer) {
-        dao.updateCustomer(newCustomer);
+        this.dao.updateCustomer(newCustomer);
 
     }
     public void updateCustomerWithAddress(Customer newCustomer, Address newAddress) {
-        addressService.updateAddress(newAddress);
-        dao.updateCustomer(newCustomer);
+        this.addressService.updateAddress(newAddress);
+        this.dao.updateCustomer(newCustomer);
     }
 
     @Override
     public void removeCustomer(Customer removeCustomer) throws CustomerNotFoundException {
-        dao.deleteCustomerByEmail(removeCustomer);
+        this.dao.deleteCustomerByEmail(removeCustomer);
     }
     public void removeAddressFromCustomer(Customer customer, Address address){
         customer.setAddress(null);
-        addressService.deleteAddress(address);
+        this.addressService.deleteAddress(address);
     }
-    @Transactional(rollbackFor = DataIntegrityViolationException.class)
-    @Override
-    public void addNewCustomerWithAddress(Customer customer, Address address) throws CustomerAlreadyExistWithProvidedEmailException {
-        try {
-            addressService.addNewAddress(address);
-            customer.setAddress(address);
-            dao.addCustomer(customer);
-        }catch (CustomerAlreadyExistWithProvidedEmailException e){
-            throw new CustomerAlreadyExistWithProvidedEmailException(e.toString());
-        }
-    }
-
-
 
 }

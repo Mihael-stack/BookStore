@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface AuthorDao {
     void addAuthor(Author author);
-    Author findById(int id);
+    Author findById(Long id);
     List<Author> findByName(String name);
     void updateAuthor(Author newAuthor);
     void deleteAuthor(Author removeAuthor);
+
+    List<Author> findByAlias(String alias);
 }

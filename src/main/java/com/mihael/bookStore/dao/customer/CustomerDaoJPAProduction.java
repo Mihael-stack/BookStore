@@ -5,6 +5,7 @@ import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailExce
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 
 import org.springframework.dao.DataIntegrityViolationException;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -17,11 +18,11 @@ public class CustomerDaoJPAProduction implements CustomerDao{
 
     @Transactional(rollbackFor = {CustomerAlreadyExistWithProvidedEmailException.class, DataIntegrityViolationException.class})
     @Override
-    public void addCustomer(Customer customer) throws CustomerAlreadyExistWithProvidedEmailException {
-        try {
+    public void addCustomer(Customer customer) throws CustomerAlreadyExistWithProvidedEmailException{
+        try {// TODO: Try to handel it in the controller
             this.em.persist(customer);
         }catch (DataIntegrityViolationException e){
-            throw new CustomerAlreadyExistWithProvidedEmailException("The Customer already exist with provided email.");
+            throw new CustomerAlreadyExistWithProvidedEmailException("Already exists");
         }
     }
 

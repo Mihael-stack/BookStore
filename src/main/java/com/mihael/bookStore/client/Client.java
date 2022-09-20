@@ -2,7 +2,6 @@ package com.mihael.bookStore.client;
 
 import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Customer;
-import com.mihael.bookStore.exceptions.AddressNotFoundException;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 import com.mihael.bookStore.services.address.AddressManagementService;
@@ -13,19 +12,23 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Client {
     static Log logger = LogFactory.getLog(Client.class);
-    public static void main(String[] args) throws CustomerNotFoundException {
+    public static void main(String[] args) throws CustomerAlreadyExistWithProvidedEmailException {
         ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
-        CustomerManagementService customerService = container.getBean("customerManagementService",CustomerManagementService.class);
-        AddressManagementService addressService = container.getBean("addressManagementService", AddressManagementService.class);
 
-        Customer findCustomer1 = customerService.findCustomerById(2L);
-        try{
-            Address findAddress1 = addressService.findAddress(55L);
-            System.out.println(findAddress1);
-        }catch (AddressNotFoundException e){
-            logger.warn("An Exception has been caught! -----  " ,e);
+
+        try (container) {
+            CustomerManagementService customerService = container.getBean("customerManagementService", CustomerManagementService.class);
+            AddressManagementService addressService = container.getBean("addressManagementService", AddressManagementService.class);
+            Customer customer1 = new Customer("Ben", "Ten", "benTen@mail.com");
+            Address address1 = new Address("1 BStreet", "Belgrade", "Serbia", "ASS-22221", "Serbia");
+            customerService.addNewCustomerWithAddress(customer1, address1);
+        } catch (CustomerAlreadyExistWithProvidedEmailException |
+                 org.springframework.dao.DataIntegrityViolationException e) {
+            logger.warn("Trying to save a Customer with existing email, Exception.");
             e.printStackTrace();
+            System.out.println("ENDED! DataIntegrityViolationException---------------------------------------------");
         }
+
 
     }
 

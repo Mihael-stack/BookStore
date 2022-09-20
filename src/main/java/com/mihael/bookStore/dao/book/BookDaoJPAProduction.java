@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Transactional
 public class BookDaoJPAProduction implements BookDao{
@@ -19,14 +20,20 @@ public class BookDaoJPAProduction implements BookDao{
     }
 
     @Override
-    public Book findById(int id) {
+    public Book findById(Long id) {
         return this.em.find(Book.class,id);
     }
 
     @Override
     public Book findByISBN(String isbn) {
-        return (Book)this.em.createQuery("SELECT book FROM Book as book WHERE book.ISBN=:isbn")
+        return this.em.createQuery("SELECT book FROM Book as book WHERE book.ISBN=:isbn", Book.class)
                 .setParameter("isbn",isbn).getSingleResult();
+    }
+
+    @Override
+    public List<Book> findByTitle(String title) {
+        return this.em.createQuery("SELECT book FROM Book as book WHERE book.title=:title", Book.class)
+                .setParameter("title",title).getResultList();
     }
 
     @Override

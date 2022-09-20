@@ -1,37 +1,42 @@
 package com.mihael.bookStore.services.book;
 
-import com.mihael.bookStore.entity.Author;
+import com.mihael.bookStore.dao.book.BookDao;
+
 import com.mihael.bookStore.entity.Book;
+import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
+
+import java.util.List;
 
 public class BookManagementServiceProductionImpl implements BookManagementService{
 
-    @Override
-    public void addNewBook(Book book) {
+    private final BookDao dao;
 
+    public BookManagementServiceProductionImpl(BookDao dao){
+        this.dao = dao;
     }
 
     @Override
-    public void addAuthorToABook(Author author) {
-
+    public void addNewBook(Book book) {
+        this.dao.addBook(book);
     }
 
     @Override
     public void removeBook(Book removeBook) {
-
+        this.dao.removeBook(removeBook);
     }
 
     @Override
     public Book findBookByISBN(String ISBN) {
-        return null;
+        return this.dao.findByISBN(ISBN);
     }
 
     @Override
-    public Book findBookByTitle(String title) {
-        return null;
+    public List<Book> findBookByTitle(String title) {
+        return this.dao.findByTitle(title);
     }
 
     @Override
-    public void updateBook(Book newBook) {
-
+    public void updateBook(Book newBook) throws ISBNIsInvalidException {
+        this.dao.updateBook(newBook);
     }
 }

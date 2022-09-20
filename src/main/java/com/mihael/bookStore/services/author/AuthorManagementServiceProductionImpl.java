@@ -1,42 +1,66 @@
 package com.mihael.bookStore.services.author;
 
+import com.mihael.bookStore.dao.author.AuthorDao;
+import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Author;
-import com.mihael.bookStore.entity.Book;
+import com.mihael.bookStore.exceptions.AddressNotFoundException;
+import com.mihael.bookStore.services.address.AddressManagementService;
+
+import java.util.List;
 
 public class AuthorManagementServiceProductionImpl implements AuthorManagementService{
 
-    @Override
-    public void addNewAuthor(Author author) {
+    private final AuthorDao dao;
+    private final AddressManagementService addressService;
 
+    public AuthorManagementServiceProductionImpl(AuthorDao dao, AddressManagementService addressService){
+        this.dao = dao;
+        this.addressService = addressService;
     }
 
     @Override
-    public void addBookToAAuthor(Book book) {
+    public void addNewAuthor(Author author) {
+        this.dao.addAuthor(author);
+    }
 
+    @Override
+    public void addNewAuthorWithAddress(Author author, Address address) {
+        this.addressService.addNewAddress(address);
+        author.setAddress(address);
+        this.dao.addAuthor(author);
     }
 
     @Override
     public void removeAuthor(Author removeAuthor) {
-
+        this.dao.deleteAuthor(removeAuthor);
     }
+
+    @Override
+    public void removeAuthorsAddress(Author author) throws AddressNotFoundException {
+        Address address = this.addressService.findAddress(author.getAddressReadOnly().getId());
+        Author persistAuthor = this.findAuthorById(author.getId());
+        persistAuthor.setAddress(null);
+        this.addressService.deleteAddress(address);
+    }
+
 
     @Override
     public Author findAuthorById(Long id) {
-        return null;
+        return this.dao.findById(id);
     }
 
     @Override
-    public Author findAuthorByName(String name) {
-        return null;
+    public List<Author> findAuthorByName(String name) {
+        return this.dao.findByName(name);
     }
 
     @Override
-    public Author findAuthorByAlias(String alias) {
-        return null;
+    public List<Author> findAuthorByAlias(String alias) {
+        return this.dao.findByAlias(alias);
     }
 
     @Override
     public void updateAuthor(Author newAuthor) {
-
+        this.dao.updateAuthor(newAuthor);
     }
 }

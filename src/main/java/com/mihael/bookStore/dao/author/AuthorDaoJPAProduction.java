@@ -17,7 +17,7 @@ public class AuthorDaoJPAProduction implements AuthorDao{
     }
 
     @Override
-    public Author findById(int id) {
+    public Author findById(Long id) {
         return this.em.find(Author.class, id);
     }
 
@@ -26,6 +26,12 @@ public class AuthorDaoJPAProduction implements AuthorDao{
         return this.em.createQuery("SELECT author FROM Author as author WHERE author.name=:name",Author.class)
                 .setParameter("name",name).getResultList();
     }
+    @Override
+    public List<Author> findByAlias(String alias) {
+        return this.em.createQuery("SELECT author FROM Author as author WHERE author.alias=:alias", Author.class)
+                .setParameter("alias",alias).getResultList();
+    }
+
 
     @Override
     public void updateAuthor(Author newAuthor) {
@@ -41,5 +47,4 @@ public class AuthorDaoJPAProduction implements AuthorDao{
         Author author = em.find(Author.class, removeAuthor.getId());
         this.em.remove(author);
     }
-
 }
