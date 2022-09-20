@@ -34,7 +34,7 @@ public class BookDaoJPAProduction implements BookDao{
         Book oldBook = this.em.find(Book.class, newBook.getId());
         oldBook.setISBN(newBook.getISBN());
         oldBook.setTitle(newBook.getTitle());
-        //TODO: UPDATE the Authors method - oldBook.setAuthors();
+        oldBook.setAuthors(newBook.getAuthorsUnmodifiable());
     }
 
     @Override

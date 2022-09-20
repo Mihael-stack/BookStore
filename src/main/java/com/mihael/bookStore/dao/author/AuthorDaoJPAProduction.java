@@ -32,9 +32,8 @@ public class AuthorDaoJPAProduction implements AuthorDao{
         Author oldAuthor = this.em.find(Author.class,newAuthor.getId());
         oldAuthor.setName(newAuthor.getName());
         oldAuthor.setAlias(newAuthor.getAlias());
-        // TODO: Fix Address
-        //oldAuthor.setAddress(newAuthor.setAddress());
-        oldAuthor.setBooksWritten(newAuthor.getBooksWritten());
+        oldAuthor.setAddress(newAuthor.getAddress());
+        oldAuthor.setBooksWritten(newAuthor.getBooksWrittenUnmodifiable());
     }
 
     @Override
