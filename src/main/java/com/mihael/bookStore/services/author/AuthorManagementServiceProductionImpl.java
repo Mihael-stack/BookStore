@@ -3,6 +3,7 @@ package com.mihael.bookStore.services.author;
 import com.mihael.bookStore.dao.author.AuthorDao;
 import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Author;
+import com.mihael.bookStore.entity.Book;
 import com.mihael.bookStore.exceptions.AddressNotFoundException;
 import com.mihael.bookStore.exceptions.AuthorNotFoundException;
 import com.mihael.bookStore.services.address.AddressManagementService;
@@ -21,6 +22,12 @@ public class AuthorManagementServiceProductionImpl implements AuthorManagementSe
 
     @Override
     public void addNewAuthor(Author author) {
+        this.dao.addAuthor(author);
+    }
+
+    @Override
+    public void addNewAuthor(Author author, Book book) {
+        author.addBooksWritten(book);
         this.dao.addAuthor(author);
     }
 

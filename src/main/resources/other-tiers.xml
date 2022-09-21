@@ -2,16 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         https://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/tx
-        https://www.springframework.org/schema/tx/spring-tx.xsd
-        http://www.springframework.org/schema/aop
-        https://www.springframework.org/schema/aop/spring-aop.xsd">
+        https://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- EntityManagerFactory bean -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -56,14 +53,13 @@
     <bean id="bookManagementService" class="com.mihael.bookStore.services.book.BookManagementServiceProductionImpl">
         <constructor-arg name="dao" ref="bookDao"/>
     </bean>
-    <bean id="bookAndAuthorManagementService"
-          class="com.mihael.bookStore.services.bookAndAuthorManagementService.BookAndAuthorManagementServiceProductionImpl">
+    <bean id="bookAndAuthorManagementService" class="com.mihael.bookStore.services.bookAndAuthorManagementService.BookAndAuthorManagementServiceProductionImpl">
         <constructor-arg name="bookService" ref="bookManagementService" />
         <constructor-arg name="authorService" ref="authorManagementService" />
     </bean>
 
 
-    <!-- Using Autowire for Integration Tests! -->
+
     <context:component-scan base-package="com.mihael.bookStore"/>
 
 </beans>

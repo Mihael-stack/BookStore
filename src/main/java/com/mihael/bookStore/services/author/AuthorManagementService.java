@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface AuthorManagementService {
     void addNewAuthor(Author author);
+    void addNewAuthor(Author author, Book book);
     void addNewAuthorWithAddress(Author author, Address address);
     void removeAuthor(Author removeAuthor);
     void removeAuthorsAddress(Author author) throws AddressNotFoundException, AuthorNotFoundException;
