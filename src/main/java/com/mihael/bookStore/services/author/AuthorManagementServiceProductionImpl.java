@@ -4,6 +4,7 @@ import com.mihael.bookStore.dao.author.AuthorDao;
 import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Author;
 import com.mihael.bookStore.exceptions.AddressNotFoundException;
+import com.mihael.bookStore.exceptions.AuthorNotFoundException;
 import com.mihael.bookStore.services.address.AddressManagementService;
 
 import java.util.List;
@@ -36,26 +37,26 @@ public class AuthorManagementServiceProductionImpl implements AuthorManagementSe
     }
 
     @Override
-    public void removeAuthorsAddress(Author author) throws AddressNotFoundException {
-        Address address = this.addressService.findAddress(author.getAddressReadOnly().getId());
+    public void removeAuthorsAddress(Author author) throws AddressNotFoundException, AuthorNotFoundException {
         Author persistAuthor = this.findAuthorById(author.getId());
+        Address address = this.addressService.findAddress(persistAuthor.getAddressReadOnly().getId());
         persistAuthor.setAddress(null);
         this.addressService.deleteAddress(address);
     }
 
 
     @Override
-    public Author findAuthorById(Long id) {
+    public Author findAuthorById(Long id) throws AuthorNotFoundException {
         return this.dao.findById(id);
     }
 
     @Override
-    public List<Author> findAuthorByName(String name) {
+    public List<Author> findAuthorByName(String name) throws AuthorNotFoundException {
         return this.dao.findByName(name);
     }
 
     @Override
-    public List<Author> findAuthorByAlias(String alias) {
+    public List<Author> findAuthorByAlias(String alias) throws AuthorNotFoundException {
         return this.dao.findByAlias(alias);
     }
 

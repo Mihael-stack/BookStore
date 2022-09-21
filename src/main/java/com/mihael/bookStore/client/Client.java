@@ -1,39 +1,28 @@
 package com.mihael.bookStore.client;
 
 import com.mihael.bookStore.entity.Address;
+import com.mihael.bookStore.entity.Author;
 import com.mihael.bookStore.entity.Customer;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
-import com.mihael.bookStore.services.address.AddressManagementService;
+import com.mihael.bookStore.services.author.AuthorManagementService;
 import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Client {
+    public static ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");;
+
     static Log logger = LogFactory.getLog(Client.class);
     public static void main(String[] args) throws CustomerAlreadyExistWithProvidedEmailException {
-        ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
-
-
-        try (container) {
-            CustomerManagementService customerService = container.getBean("customerManagementService", CustomerManagementService.class);
-            AddressManagementService addressService = container.getBean("addressManagementService", AddressManagementService.class);
-            Customer customer1 = new Customer("Ben", "Ten", "benTen@mail.com");
-            Address address1 = new Address("1 BStreet", "Belgrade", "Serbia", "ASS-22221", "Serbia");
-            customerService.addNewCustomerWithAddress(customer1, address1);
-        } catch (CustomerAlreadyExistWithProvidedEmailException |
-                 org.springframework.dao.DataIntegrityViolationException e) {
-            logger.warn("Trying to save a Customer with existing email, Exception.");
-            e.printStackTrace();
-            System.out.println("ENDED! DataIntegrityViolationException---------------------------------------------");
-        }
-
+        creatingCustomersWithAddress();
+        creatingAuthors();
 
     }
 
-    public void creatingCustomersWithAddress() throws CustomerAlreadyExistWithProvidedEmailException {
-        ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
+    public static void creatingCustomersWithAddress() throws CustomerAlreadyExistWithProvidedEmailException {
+
         CustomerManagementService customerService = container.getBean("customerManagementService",CustomerManagementService.class);
 
         Customer customer1 = new Customer("Ben","Ten","benTen@mail.com");
@@ -46,19 +35,21 @@ public class Client {
         customerService.addNewCustomerWithAddress(customer1,address1);
         customerService.addNewCustomerWithAddress(customer2,address2);
         customerService.addNewCustomerWithAddress(customer3, address3);
-        try {
-            Customer findCustomer1 = customerService.findCustomerByEmail("benTen@mail.com");
-            Customer findCustomer2 = customerService.findCustomerByEmail("namdaMamba@mail.com");
-            Customer findCustomer3 = customerService.findCustomerByEmail("steveBobber@mail.com");
-            System.out.println(findCustomer1.toString());
-            System.out.println(findCustomer2.toString());
-            System.out.println(findCustomer3.toString());
-        }
-        catch (CustomerNotFoundException e){
-            logger.warn("An Exception has been caught! -----  " ,e);
-            e.printStackTrace();
-        }
 
+    }
+    public static void creatingAuthors(){
+        AuthorManagementService authorService = container.getBean("authorManagementService", AuthorManagementService.class);
+        Author author1 = new Author("Colleen Hoover", "Jane Hoover");
+        Author author2 = new Author("Stephen King", "Stephen Queen");
+        Author author3 = new Author("Jim Vandehei", "Josh Vandehei");
+        Address address1 = new Address("Partizanski Odredi","Bitola","North Macedonia",
+                "1150","North Macedonia");
+        Address address2 = new Address("21 Heroes St.","Kyiv","Ukraine","4200","Ukraine");
+        Address address3 = new Address("16 DownTown","London","England","5588","United Kingdom");
+
+        authorService.addNewAuthorWithAddress(author1,address1);
+        authorService.addNewAuthorWithAddress(author2,address2);
+        authorService.addNewAuthorWithAddress(author3,address3);
 
 
     }

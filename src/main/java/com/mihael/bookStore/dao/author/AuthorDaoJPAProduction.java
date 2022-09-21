@@ -1,11 +1,14 @@
 package com.mihael.bookStore.dao.author;
 
 import com.mihael.bookStore.entity.Author;
+import com.mihael.bookStore.exceptions.AuthorNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Queue;
+
 @Transactional
 public class AuthorDaoJPAProduction implements AuthorDao{
     @PersistenceContext
@@ -17,19 +20,27 @@ public class AuthorDaoJPAProduction implements AuthorDao{
     }
 
     @Override
-    public Author findById(Long id) {
-        return this.em.find(Author.class, id);
+    public Author findById(Long id) throws AuthorNotFoundException {
+        if(this.em.find(Author.class, id) == null){
+            throw new AuthorNotFoundException("Author does not exist!");
+        }else return this.em.find(Author.class, id);
     }
 
     @Override
-    public List<Author> findByName(String name) {
-        return this.em.createQuery("SELECT author FROM Author as author WHERE author.name=:name",Author.class)
+    public List<Author> findByName(String name) throws AuthorNotFoundException {
+        List<Author> list = this.em.createQuery("SELECT author FROM Author as author WHERE author.name=:name",Author.class)
                 .setParameter("name",name).getResultList();
+        if(list.isEmpty()){
+            throw new AuthorNotFoundException("There isn't any Authors with specified name");
+        }else return list;
     }
     @Override
-    public List<Author> findByAlias(String alias) {
-        return this.em.createQuery("SELECT author FROM Author as author WHERE author.alias=:alias", Author.class)
+    public List<Author> findByAlias(String alias) throws AuthorNotFoundException {
+        List<Author> list = this.em.createQuery("SELECT author FROM Author as author WHERE author.alias=:alias", Author.class)
                 .setParameter("alias",alias).getResultList();
+        if(list.isEmpty()){
+            throw new AuthorNotFoundException("There isn't any Authors with specified alias");
+        }else return list;
     }
 
 
