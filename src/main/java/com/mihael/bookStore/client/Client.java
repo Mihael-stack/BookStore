@@ -2,10 +2,14 @@ package com.mihael.bookStore.client;
 
 import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Author;
+import com.mihael.bookStore.entity.Book;
 import com.mihael.bookStore.entity.Customer;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
+import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 import com.mihael.bookStore.services.author.AuthorManagementService;
+import com.mihael.bookStore.services.book.BookManagementService;
+import com.mihael.bookStore.services.book.BookManagementServiceProductionImpl;
 import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,9 +19,8 @@ public class Client {
     public static ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");;
 
     static Log logger = LogFactory.getLog(Client.class);
-    public static void main(String[] args) throws CustomerAlreadyExistWithProvidedEmailException {
-        creatingCustomersWithAddress();
-        creatingAuthors();
+    public static void main(String[] args) throws CustomerAlreadyExistWithProvidedEmailException, ISBNIsInvalidException {
+        creatingBooks();
 
     }
 
@@ -51,6 +54,22 @@ public class Client {
         authorService.addNewAuthorWithAddress(author2,address2);
         authorService.addNewAuthorWithAddress(author3,address3);
 
+
+    }
+
+    public static void creatingBooks() throws ISBNIsInvalidException {
+        BookManagementService bookService = container.getBean("bookManagementService", BookManagementServiceProductionImpl.class);
+        Book book1 = new Book("1638930163","The Empress: A Novel");
+        Book book2 = new Book("0804176604","Devotion: An Epic Story of Heroism, Friendship, and Sacrifice");
+        Book book3 = new Book("978-1524796303","Fire & Blood: 300 Years Before A Game of Thrones");
+        Book book4 = new Book("978-0399226908","The Very Hungry Caterpillar");
+        Book book5 = new Book("0805047905","rown Bear, Brown Bear, What Do You See?");
+
+        bookService.addNewBook(book1);
+        bookService.addNewBook(book2);
+        bookService.addNewBook(book3);
+        bookService.addNewBook(book4);
+        bookService.addNewBook(book5);
 
     }
 }

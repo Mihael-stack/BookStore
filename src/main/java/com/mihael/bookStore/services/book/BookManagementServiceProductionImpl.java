@@ -3,6 +3,7 @@ package com.mihael.bookStore.services.book;
 import com.mihael.bookStore.dao.book.BookDao;
 
 import com.mihael.bookStore.entity.Book;
+import com.mihael.bookStore.exceptions.BookNotFoundException;
 import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 
 import java.util.List;
@@ -21,17 +22,22 @@ public class BookManagementServiceProductionImpl implements BookManagementServic
     }
 
     @Override
-    public void removeBook(Book removeBook) {
+    public void removeBook(Book removeBook) throws BookNotFoundException {
         this.dao.removeBook(removeBook);
     }
 
     @Override
-    public Book findBookByISBN(String ISBN) {
+    public Book findBookById(Long id) throws BookNotFoundException {
+        return this.dao.findById(id);
+    }
+
+    @Override
+    public Book findBookByISBN(String ISBN) throws BookNotFoundException {
         return this.dao.findByISBN(ISBN);
     }
 
     @Override
-    public List<Book> findBookByTitle(String title) {
+    public List<Book> findBookByTitle(String title) throws BookNotFoundException {
         return this.dao.findByTitle(title);
     }
 

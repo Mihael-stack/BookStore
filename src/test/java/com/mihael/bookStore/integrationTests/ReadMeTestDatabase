@@ -23,3 +23,15 @@ The Test Database needs to be populated with these values.
         authorService.addNewAuthorWithAddress(author1,address1);
         authorService.addNewAuthorWithAddress(author2,address2);
         authorService.addNewAuthorWithAddress(author3,address3);
+
+        Book book1 = new Book("1638930163","The Empress: A Novel");
+        Book book2 = new Book("0804176604","Devotion: An Epic Story of Heroism, Friendship, and Sacrifice");
+        Book book3 = new Book("978-1524796303","Fire & Blood: 300 Years Before A Game of Thrones");
+        Book book4 = new Book("978-0399226908","The Very Hungry Caterpillar");
+        Book book5 = new Book("0805047905","rown Bear, Brown Bear, What Do You See?");
+
+        bookService.addNewBook(book1);
+        bookService.addNewBook(book2);
+        bookService.addNewBook(book3);
+        bookService.addNewBook(book4);
+        bookService.addNewBook(book5);
