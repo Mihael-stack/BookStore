@@ -9,8 +9,6 @@ import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 import com.mihael.bookStore.services.author.AuthorManagementService;
 import com.mihael.bookStore.services.book.BookManagementService;
 import com.mihael.bookStore.services.book.BookManagementServiceProductionImpl;
-import com.mihael.bookStore.services.bookAndAuthorManagementService.BookAndAuthorManagementService;
-import com.mihael.bookStore.services.bookAndAuthorManagementService.BookAndAuthorManagementServiceProductionImpl;
 import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,7 +20,6 @@ public class Client {
 
     static Log logger = LogFactory.getLog(Client.class);
     public static void main(String[] args) throws ISBNIsInvalidException, CustomerAlreadyExistWithProvidedEmailException {
-        creatingBooksWithAuthors();
 
     }
 
@@ -74,18 +71,18 @@ public class Client {
         bookService.addNewBook(book5);
 
     }
-    public static void creatingBooksWithAuthors() throws ISBNIsInvalidException {
-        BookAndAuthorManagementService bookAndAuthorManagementService = container.getBean("bookAndAuthorManagementService",BookAndAuthorManagementServiceProductionImpl.class);
-
-        Book book1 = new Book("1637970137","Fly High");
-        Book book2 = new Book("0804176604","Devotion: An Epic Story of Heroism, Friendship, and Sacrifice");
-        Book book3 = new Book("978-1524796303","Fire & Blood: 300 Years Before A Game of Thrones");
-        Author author1 = new Author("Janet K. Johnson", "Jennet");
-        Author author2 = new Author("Michelle Medlock Adams", "Medlock");
-
-        bookAndAuthorManagementService.addAuthorWithBook(author1, book1);
-        bookAndAuthorManagementService.addAuthorWithBook(author1, book3);
-        bookAndAuthorManagementService.addBookWithAuthor(book2,author2);
-        bookAndAuthorManagementService.addBookWithAuthor(book1,author2);
-    }
+//    public static void creatingBooksWithAuthors() throws ISBNIsInvalidException {
+//        BookAndAuthorManagementService bookAndAuthorManagementService = container.getBean("bookAndAuthorManagementService",BookAndAuthorManagementServiceProductionImpl.class);
+//
+//        Book book1 = new Book("1637970137","Fly High");
+//        Book book2 = new Book("0804176604","Devotion: An Epic Story of Heroism, Friendship, and Sacrifice");
+//        Book book3 = new Book("978-1524796303","Fire & Blood: 300 Years Before A Game of Thrones");
+//        Author author1 = new Author("Janet K. Johnson", "Jennet");
+//        Author author2 = new Author("Michelle Medlock Adams", "Medlock");
+//
+//        bookAndAuthorManagementService.addAuthorWithBook(author1, book1);
+//        bookAndAuthorManagementService.addAuthorWithBook(author1, book3);
+//        bookAndAuthorManagementService.addBookWithAuthor(book2,author2);
+//        bookAndAuthorManagementService.addBookWithAuthor(book1,author2);
+//    }
 }
