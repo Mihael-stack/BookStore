@@ -17,7 +17,7 @@ public class Book {
     private String ISBN;
     private String title;
 
-    @ManyToMany(mappedBy = "booksWritten", cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Author> authors;
 
     //Hibernate needs an empty constructor

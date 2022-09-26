@@ -13,7 +13,7 @@ public class Author {
     private Long id;
     private String name;
     private String alias;
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "authors", cascade = CascadeType.PERSIST)
     private Set<Book> booksWritten;
 
     @OneToOne(cascade = CascadeType.REMOVE)

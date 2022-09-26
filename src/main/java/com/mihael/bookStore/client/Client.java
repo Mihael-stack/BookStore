@@ -9,8 +9,7 @@ import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 import com.mihael.bookStore.services.author.AuthorManagementService;
 import com.mihael.bookStore.services.book.BookManagementService;
 import com.mihael.bookStore.services.book.BookManagementServiceProductionImpl;
-import com.mihael.bookStore.services.bookAndAuthorManagementService.BookAndAuthorManagementService;
-import com.mihael.bookStore.services.bookAndAuthorManagementService.BookAndAuthorManagementServiceProductionImpl;
+
 import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,10 +21,9 @@ public class Client {
 
     static Log logger = LogFactory.getLog(Client.class);
     public static void main(String[] args) throws ISBNIsInvalidException, CustomerAlreadyExistWithProvidedEmailException {
-        //BookAndAuthorManagementService bookAndAuthorManagementService = container.getBean("bookAndAuthorManagementService", BookAndAuthorManagementServiceProductionImpl.class);
-        creatingCustomersWithAddress();
-        creatingAuthors();
-        creatingBooks(); // TODO: Fix BookAndAuthorManagementService ( ROOT PROBLEM IS BookManagementService )
+
+        creatingBooks();
+
 
     }
 
