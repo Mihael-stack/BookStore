@@ -1,5 +1,8 @@
 package com.mihael.bookStore.client;
 
+import com.mihael.bookStore.dao.author.AuthorDao;
+import com.mihael.bookStore.dao.book.BookDao;
+import com.mihael.bookStore.dao.book.BookDaoJPAProduction;
 import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Author;
 import com.mihael.bookStore.entity.Book;
@@ -7,8 +10,6 @@ import com.mihael.bookStore.entity.Customer;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 import com.mihael.bookStore.services.author.AuthorManagementService;
-import com.mihael.bookStore.services.book.BookManagementService;
-import com.mihael.bookStore.services.book.BookManagementServiceProductionImpl;
 
 import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.apache.commons.logging.Log;
@@ -21,9 +22,7 @@ public class Client {
 
     static Log logger = LogFactory.getLog(Client.class);
     public static void main(String[] args) throws ISBNIsInvalidException, CustomerAlreadyExistWithProvidedEmailException {
-
-        creatingBooks();
-
+        //TODO: Before Fixing BookDao and BookManagementService, Create REST API For Customers and Angular frontEnd
 
     }
 
@@ -59,20 +58,33 @@ public class Client {
 
 
     }
+    public static void creatingAuthorsAuthorDao(){
+        AuthorDao authorService = container.getBean("authorDao", AuthorDao.class);
+        Author author1 = new Author("Colleen Hoover", "Jane Hoover");
+        Author author2 = new Author("Stephen King", "Stephen Queen");
+        Author author3 = new Author("Jim Vandehei", "Josh Vandehei");
+
+        authorService.addAuthor(author1);
+        authorService.addAuthor(author2);
+        authorService.addAuthor(author3);
+
+
+    }
 
     public static void creatingBooks() throws ISBNIsInvalidException {
-        BookManagementService bookService = container.getBean("bookManagementService", BookManagementServiceProductionImpl.class);
+        //TODO:: Fix BookDao and BookManagementService
+        BookDao bookService = container.getBean("bookDao", BookDaoJPAProduction.class);
         Book book1 = new Book("1638930163","The Empress: A Novel");
         Book book2 = new Book("0804176604","Devotion: An Epic Story of Heroism, Friendship, and Sacrifice");
         Book book3 = new Book("978-1524796303","Fire & Blood: 300 Years Before A Game of Thrones");
         Book book4 = new Book("978-0399226908","The Very Hungry Caterpillar");
         Book book5 = new Book("0805047905","rown Bear, Brown Bear, What Do You See?");
 
-        bookService.addNewBook(book1);
-        bookService.addNewBook(book2);
-        bookService.addNewBook(book3);
-        bookService.addNewBook(book4);
-        bookService.addNewBook(book5);
+        bookService.addBook(book1);
+        bookService.addBook(book2);
+        bookService.addBook(book3);
+        bookService.addBook(book4);
+        bookService.addBook(book5);
 
     }
 //    public static void creatingBooksWithAuthors() throws ISBNIsInvalidException {
