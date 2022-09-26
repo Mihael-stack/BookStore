@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Queue;
 
 @Transactional
 public class AuthorDaoJPAProduction implements AuthorDao{

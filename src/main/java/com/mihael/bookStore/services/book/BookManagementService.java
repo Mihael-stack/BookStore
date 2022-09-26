@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface BookManagementService {
     void addNewBook(Book book);
-    void addNewBook(Book book,Author author);
     void removeBook(Book removeBook) throws BookNotFoundException;
     Book findBookById(Long id) throws BookNotFoundException;
     Book findBookByISBN(String ISBN) throws BookNotFoundException;

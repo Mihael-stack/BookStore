@@ -2,13 +2,13 @@ package com.mihael.bookStore.services.book;
 
 import com.mihael.bookStore.dao.book.BookDao;
 
-import com.mihael.bookStore.entity.Author;
 import com.mihael.bookStore.entity.Book;
 import com.mihael.bookStore.exceptions.BookNotFoundException;
 import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Transactional
 public class BookManagementServiceProductionImpl implements BookManagementService{
 
     private final BookDao dao;
@@ -21,13 +21,6 @@ public class BookManagementServiceProductionImpl implements BookManagementServic
     public void addNewBook(Book book) {
         this.dao.addBook(book);
     }
-
-    @Override
-    public void addNewBook(Book book, Author author) {
-        book.addAuthor(author);
-        this.dao.addBook(book);
-    }
-
 
     @Override
     public void removeBook(Book removeBook) throws BookNotFoundException {

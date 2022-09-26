@@ -29,8 +29,6 @@ public class Book {
         this.authors = new HashSet<>();
     }
 
-
-
     @Override
     public String toString() {
         return "Book{" +

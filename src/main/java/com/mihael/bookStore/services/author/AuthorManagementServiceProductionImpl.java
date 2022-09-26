@@ -7,9 +7,10 @@ import com.mihael.bookStore.entity.Book;
 import com.mihael.bookStore.exceptions.AddressNotFoundException;
 import com.mihael.bookStore.exceptions.AuthorNotFoundException;
 import com.mihael.bookStore.services.address.AddressManagementService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Transactional
 public class AuthorManagementServiceProductionImpl implements AuthorManagementService{
 
     private final AuthorDao dao;
@@ -22,12 +23,6 @@ public class AuthorManagementServiceProductionImpl implements AuthorManagementSe
 
     @Override
     public void addNewAuthor(Author author) {
-        this.dao.addAuthor(author);
-    }
-
-    @Override
-    public void addNewAuthor(Author author, Book book) {
-        author.addBooksWritten(book);
         this.dao.addAuthor(author);
     }
 

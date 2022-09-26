@@ -14,7 +14,6 @@ public class BookDaoJPAProduction implements BookDao{
     @PersistenceContext
     private EntityManager em;
 
-
     @Override
     public void addBook(Book book) {
         this.em.persist(book);

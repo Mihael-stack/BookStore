@@ -18,10 +18,10 @@
         <logger name="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" level="DEBUG" additivity="false">
             <AppenderRef ref="Console" />
         </logger>
-        <logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory" level="TRACE" additivity="false">
+        <logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory" level="DEBUG" additivity="false">
             <AppenderRef ref="Console" />
         </logger>
-        <logger name="org.springframework.aop.framework.ProxyFactory" level="TRACE">
+        <logger name="org.springframework.aop.framework.ProxyFactory" level="DEBUG">
             <AppenderRef ref="Console"/>
         </logger>
 

@@ -53,6 +53,10 @@
     <bean id="bookManagementService" class="com.mihael.bookStore.services.book.BookManagementServiceProductionImpl">
         <constructor-arg name="dao" ref="bookDao"/>
     </bean>
+<!--    <bean id="bookAndAuthorManagementService" class="com.mihael.bookStore.services.bookAndAuthorManagementService.BookAndAuthorManagementServiceProductionImpl">-->
+<!--        <constructor-arg name="bookService" ref="bookManagementService"/>-->
+<!--        <constructor-arg name="authorService" ref="authorManagementService" />-->
+<!--    </bean>-->
 
 
 
