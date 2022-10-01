@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### tomcat ###
+tomcat9
+tomcat9/**
