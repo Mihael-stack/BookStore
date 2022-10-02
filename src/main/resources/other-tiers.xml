@@ -57,6 +57,5 @@
 
 
     <context:component-scan base-package="com.mihael.bookStore.dao"/>
-    <context:component-scan base-package="com.mihael.bookStore.restcontrollers"/>
 
 </beans>

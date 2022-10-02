@@ -8,24 +8,39 @@
     <groupId>com.mihael</groupId>
     <artifactId>BookStore</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <packaging>war</packaging>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
     <!-- Plugin Configuration -->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+
                 <configuration>
-                    <outputDirectory>
-                        ${project.basedir}/tomcat9/webapps
-                    </outputDirectory>
+                    <outputDirectory>${project.basedir}/../tomcat9/webapps</outputDirectory>
+                    <warName>myapp</warName>
+                    <webResources>
+                        <resource>
+                            <directory>${project.basedir}/src/main/resources</directory>
+                            <targetPath>WEB-INF</targetPath>
+                            <includes>
+                                <include>**/application.xml</include>
+                                <include>**/database-test.xml</include>
+                                <include>**/database-production.xml</include>
+                                <include>**/log4j2.xml</include>
+                                <include>**/other-tiers.xml</include>
+                                <include>**/Dispatcher-servlet.xml</include>
+                            </includes>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>
