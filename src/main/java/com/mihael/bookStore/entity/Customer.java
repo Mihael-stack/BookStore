@@ -1,8 +1,10 @@
 package com.mihael.bookStore.entity;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
+@XmlRootElement
 public class Customer {
 
     @Id
