@@ -1,5 +1,7 @@
 package com.mihael.bookStore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -61,7 +63,8 @@ public class Customer {
         return address;
     } // Use this only if you need to change values of the Address
 
-    public AddressReadOnly getAddressReadOnly() { // This is a read only Address
+    @JsonIgnore
+    public AddressReadOnly getAddressReadOnly() { // note: Json was giving back both Address and AddressReadOnly in data conversion, Fixed with @JsonIgnore, This might be a problem in the future. If address is not given back when it should be, the problem might originate from this annotation
         return address;
     }
 
