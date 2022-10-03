@@ -4,6 +4,8 @@ import com.mihael.bookStore.entity.Customer;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 
+import java.util.List;
+
 public interface CustomerDao {
     void addCustomer(Customer customer) throws CustomerAlreadyExistWithProvidedEmailException;
     Customer findCustomerById(Long id) throws CustomerNotFoundException;
@@ -11,4 +13,6 @@ public interface CustomerDao {
     void deleteCustomerById(Customer customer) throws CustomerNotFoundException;
     void deleteCustomerByEmail(Customer customer) throws CustomerNotFoundException;
     void updateCustomer(Customer newCustomer);
+
+    List<Customer> getAllCustomers() throws CustomerNotFoundException;
 }

@@ -9,6 +9,8 @@ import com.mihael.bookStore.services.address.AddressManagementService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 public class CustomerManagementServiceProductionImpl implements CustomerManagementService{
     private final CustomerDao dao;
@@ -78,6 +80,11 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     public void removeAddressFromCustomer(Customer customer, Address address){
         customer.setAddress(null);
         this.addressService.deleteAddress(address);
+    }
+
+    @Override
+    public List<Customer> getAllCustomers() throws CustomerNotFoundException {
+        return this.dao.getAllCustomers();
     }
 
 }

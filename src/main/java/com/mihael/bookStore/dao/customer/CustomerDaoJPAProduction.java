@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Transactional
 public class CustomerDaoJPAProduction implements CustomerDao{
@@ -63,6 +64,15 @@ public class CustomerDaoJPAProduction implements CustomerDao{
         oldCustomer.setEmailAddress(newCustomer.getEmailAddress());
         oldCustomer.setFirstName(newCustomer.getFirstName());
         oldCustomer.setLastName(newCustomer.getLastName());
+    }
+
+    @Override
+    public List<Customer> getAllCustomers() throws CustomerNotFoundException {
+        List<Customer> list = em.createQuery("SELECT customer FROM Customer as customer", Customer.class).getResultList();
+        if(list.isEmpty()){
+            throw new CustomerNotFoundException("The Customer database is empty");
+        }
+        else return list;
     }
 
 }

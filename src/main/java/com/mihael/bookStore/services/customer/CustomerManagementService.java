@@ -5,6 +5,8 @@ import com.mihael.bookStore.entity.Customer;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 
+import java.util.List;
+
 public interface CustomerManagementService {
     void addNewCustomer(Customer customer) throws CustomerAlreadyExistWithProvidedEmailException;
     void addNewCustomerWithAddress(Customer customer, Address address) throws CustomerAlreadyExistWithProvidedEmailException;
@@ -15,4 +17,5 @@ public interface CustomerManagementService {
     void removeCustomer(Customer removeCustomer) throws CustomerNotFoundException;
     void removeAddressFromCustomer(Customer customer,Address address);
 
+    List<Customer> getAllCustomers() throws CustomerNotFoundException;
 }
