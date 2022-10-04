@@ -2,6 +2,7 @@ package com.mihael.bookStore.restcontrollers;
 
 import com.mihael.bookStore.client.Client;
 import com.mihael.bookStore.entity.Customer;
+import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 import com.mihael.bookStore.representations.CustomerCollectionRepresentation;
 import com.mihael.bookStore.restcontrollers.errorhandlers.ClientErrorInformation;
@@ -9,12 +10,10 @@ import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,14 +31,30 @@ public class CustomerRestController {
         ClientErrorInformation error = new ClientErrorInformation(e.toString());
         return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(CustomerAlreadyExistWithProvidedEmailException.class)
+    public ResponseEntity<ClientErrorInformation> rulesForCustomerAlreadyExistsWithEmail(Exception e){
+        ClientErrorInformation error = new ClientErrorInformation(e.toString());
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+    }
 
-    @RequestMapping("/customer/{id}")
+    @GetMapping("/customer/{id}")
     public Customer findCustomerById(@PathVariable Long id) throws CustomerNotFoundException {
         return customerService.findCustomerById(id);
     }
 
-    @RequestMapping("/customers")
+    @GetMapping("/customers")
     public CustomerCollectionRepresentation returnAllCustomers() throws CustomerNotFoundException {
         return new CustomerCollectionRepresentation(this.customerService.getAllCustomers());
+    }
+
+    @PostMapping("/customers")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public void createNewCustomer(@RequestBody Customer newCustomer) throws CustomerAlreadyExistWithProvidedEmailException {
+        try {
+            this.customerService.addNewCustomer(newCustomer);
+        }
+        catch (DataIntegrityViolationException e){
+            throw new CustomerAlreadyExistWithProvidedEmailException("Customer already exists with such email");
+        }
     }
 }
