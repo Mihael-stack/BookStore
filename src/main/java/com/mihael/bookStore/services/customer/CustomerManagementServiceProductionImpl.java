@@ -28,7 +28,6 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
         }catch (CustomerAlreadyExistWithProvidedEmailException | DataIntegrityViolationException e){
             throw new CustomerAlreadyExistWithProvidedEmailException("Email Already Exists!, AddNewCustomer-CustomerManagementService");
         }
-
     }
 
     @Transactional(rollbackFor = {CustomerAlreadyExistWithProvidedEmailException.class, DataIntegrityViolationException.class})

@@ -21,10 +21,11 @@ public class CustomerDaoJPAProduction implements CustomerDao{
     @Override
     public void addCustomer(Customer customer) throws CustomerAlreadyExistWithProvidedEmailException{
         try {// TODO: Try to handel it in the controller
-            this.em.persist(customer);
+           this.em.persist(customer);
         }catch (DataIntegrityViolationException e){
             throw new CustomerAlreadyExistWithProvidedEmailException("Already exists");
         }
+
     }
 
     @Override
