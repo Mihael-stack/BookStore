@@ -81,7 +81,17 @@ public class CustomerRestController {
     public Link deleteCustomer(@PathVariable Long id) throws CustomerNotFoundException {
         Customer customer = customerService.findCustomerById(id);
         customerService.removeCustomer(customer);
-        return linkTo(methodOn(CustomerRestController.class).findCustomerById(id)).withRel("customers");
+        return linkTo(methodOn(CustomerRestController.class).returnAllCustomers()).withRel("customers");
+    }
+
+    @PutMapping("/customer/{id}") // TODO: Rewrite UpdateCustomerWithAddress and UpdateCustomer
+    public CustomerRepresentation updateCustomer(@RequestBody @Valid Customer updateCustomer) throws CustomerNotFoundException {
+
+        customerService.updateCustomerWithAddress(updateCustomer, updateCustomer.getAddress());
+        CustomerRepresentation customerRepresentation = new CustomerRepresentation(updateCustomer);
+        Link link = linkTo(methodOn(CustomerRestController.class).findCustomerById(updateCustomer.getId())).withSelfRel();
+        customerRepresentation.add(link);
+        return customerRepresentation;
     }
 
 }
