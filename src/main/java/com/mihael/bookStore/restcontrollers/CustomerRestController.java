@@ -35,7 +35,7 @@ public class CustomerRestController {
         ClientErrorInformation error = new ClientErrorInformation(e.toString());
         return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler(CustomerAlreadyExistWithProvidedEmailException.class)
+    @ExceptionHandler({CustomerAlreadyExistWithProvidedEmailException.class, DataIntegrityViolationException.class})
     public ResponseEntity<ClientErrorInformation> rulesForCustomerAlreadyExistsWithEmail(Exception e){
         ClientErrorInformation error = new ClientErrorInformation(e.toString());
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
@@ -57,24 +57,31 @@ public class CustomerRestController {
 
         return customers;
     }
+    @GetMapping("/customer/email/{emailAddress}")
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerRepresentation findCustomerByEmail(@PathVariable String emailAddress) throws CustomerNotFoundException {
+        Customer customer = this.customerService.findCustomerByEmail(emailAddress);
+        Link link = linkTo(methodOn(CustomerRestController.class).findCustomerById(customer.getId())).withSelfRel();
+        CustomerRepresentation foundCustomer = new CustomerRepresentation(customer);
+        foundCustomer.add(link);
+        return foundCustomer;
+    }
 
     @PostMapping("/customers")
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerRepresentation createNewCustomer(@RequestBody @Valid Customer newCustomer) throws CustomerAlreadyExistWithProvidedEmailException, CustomerNotFoundException {
-        Link link;
-        CustomerRepresentation createdCustomer;
-        try {
-            this.customerService.addNewCustomer(newCustomer);
-            createdCustomer = new CustomerRepresentation(this.customerService.findCustomerByEmail(newCustomer.getEmailAddress()));
-            link = linkTo(methodOn(CustomerRestController.class).findCustomerById(createdCustomer.getId())).withSelfRel();
-            createdCustomer.add(link);
-        } catch (DataIntegrityViolationException e) {
-            throw new CustomerAlreadyExistWithProvidedEmailException("Customer already exists with such email");
-        } catch (CustomerNotFoundException e) {
-            throw new CustomerNotFoundException("createNewCustomer invoked this exception, most likely due to HATEOAS");
-        }
-
+    public CustomerRepresentation createNewCustomer(@RequestBody @Valid Customer newCustomer) throws DataIntegrityViolationException, CustomerAlreadyExistWithProvidedEmailException, CustomerNotFoundException {
+        this.customerService.addNewCustomer(newCustomer);
+        CustomerRepresentation createdCustomer = new CustomerRepresentation(this.customerService.findCustomerByEmail(newCustomer.getEmailAddress()));
+        Link link = linkTo(methodOn(CustomerRestController.class).findCustomerById(createdCustomer.getId())).withSelfRel();
+        createdCustomer.add(link);
 
         return createdCustomer;
     }
+    @DeleteMapping("customer/{id}")
+    public Link deleteCustomer(@PathVariable Long id) throws CustomerNotFoundException {
+        Customer customer = customerService.findCustomerById(id);
+        customerService.removeCustomer(customer);
+        return linkTo(methodOn(CustomerRestController.class).findCustomerById(id)).withRel("customers");
+    }
+
 }
