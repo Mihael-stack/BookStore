@@ -1,4 +1,4 @@
-package com.mihael.bookStore.restcontrollers.errorhandlers;
+package com.mihael.bookStore.representations;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

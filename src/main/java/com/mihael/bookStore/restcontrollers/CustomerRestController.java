@@ -6,7 +6,7 @@ import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailExce
 import com.mihael.bookStore.exceptions.CustomerNotFoundException;
 import com.mihael.bookStore.representations.CustomerCollectionRepresentation;
 import com.mihael.bookStore.representations.CustomerRepresentation;
-import com.mihael.bookStore.restcontrollers.errorhandlers.ClientErrorInformation;
+import com.mihael.bookStore.representations.ClientErrorInformation;
 import com.mihael.bookStore.services.customer.CustomerManagementService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,13 +15,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import org.springframework.hateoas.Link;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 public class CustomerRestController {
@@ -62,7 +60,7 @@ public class CustomerRestController {
 
     @PostMapping("/customers")
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerRepresentation createNewCustomer(@RequestBody Customer newCustomer) throws CustomerAlreadyExistWithProvidedEmailException, CustomerNotFoundException {
+    public CustomerRepresentation createNewCustomer(@RequestBody @Valid Customer newCustomer) throws CustomerAlreadyExistWithProvidedEmailException, CustomerNotFoundException {
         Link link;
         CustomerRepresentation createdCustomer;
         try {
