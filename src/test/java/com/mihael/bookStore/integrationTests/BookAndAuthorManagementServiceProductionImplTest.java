@@ -10,10 +10,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration({"/other-tiers.xml", "/database-test.xml"})
+@ContextConfiguration({"/beans.xml", "/database-test.xml"})
 @Transactional
 class BookAndAuthorManagementServiceProductionImplTest {
 

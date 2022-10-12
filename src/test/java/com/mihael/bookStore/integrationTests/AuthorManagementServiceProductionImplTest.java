@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration({"/other-tiers.xml", "/database-test.xml"})
+@ContextConfiguration({"/beans.xml", "/database-test.xml"})
 @Transactional
 class AuthorManagementServiceProductionImplTest {
 
