@@ -14,4 +14,6 @@ public interface BookManagementService {
     Book findBookByISBN(String ISBN) throws BookNotFoundException;
     List<Book> findBookByTitle(String title) throws BookNotFoundException;
     void updateBook(Book newBook) throws ISBNIsInvalidException;
+
+    List<Book> returnAllBooks();
 }

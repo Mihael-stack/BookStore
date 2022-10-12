@@ -22,7 +22,7 @@ public class Client {
 
     static Log logger = LogFactory.getLog(Client.class);
     public static void main(String[] args) throws ISBNIsInvalidException, CustomerAlreadyExistWithProvidedEmailException {
-        //TODO: Before Fixing BookDao and BookManagementService, Create REST API For Customers and Angular frontEnd
+        BookDao bookService = container.getBean("bookDao", BookDaoJPAProduction.class);
 
     }
 

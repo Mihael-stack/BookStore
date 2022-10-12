@@ -13,4 +13,6 @@ public interface BookDao {
     void updateBook(Book newBook) throws ISBNIsInvalidException;
     void removeBook(Book removeBook) throws BookNotFoundException;
     List<Book> findByTitle(String title) throws BookNotFoundException;
+
+    List<Book> returnAllBooks();
 }

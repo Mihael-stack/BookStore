@@ -36,8 +36,9 @@
                                 <include>**/database-test.xml</include>
                                 <include>**/database-production.xml</include>
                                 <include>**/log4j2.xml</include>
-                                <include>**/other-tiers.xml</include>
+                                <include>**/beans.xml</include>
                                 <include>**/Dispatcher-servlet.xml</include>
+                                <include>**/entityManager-transaction.xml/</include>
                             </includes>
                         </resource>
                     </webResources>

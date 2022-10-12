@@ -48,6 +48,11 @@ public class BookDaoJPAProduction implements BookDao{
     }
 
     @Override
+    public List<Book> returnAllBooks() {
+        return this.em.createQuery("SELECT book FROM Book as book", Book.class).getResultList();
+    }
+
+    @Override
     public void updateBook(Book newBook) throws ISBNIsInvalidException {
         Book oldBook = this.em.find(Book.class, newBook.getId());
         oldBook.setISBN(newBook.getISBN());

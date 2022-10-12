@@ -46,4 +46,9 @@ public class BookManagementServiceProductionImpl implements BookManagementServic
     public void updateBook(Book newBook) throws ISBNIsInvalidException {
         this.dao.updateBook(newBook);
     }
+
+    @Override
+    public List<Book> returnAllBooks() {
+       return this.dao.returnAllBooks();
+    }
 }
