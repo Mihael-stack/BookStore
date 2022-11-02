@@ -1,12 +1,10 @@
 package com.mihael.bookStore.entity;
 
-import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 import com.mihael.bookStore.validator.ISBNValidator;
+import com.mihael.bookStore.validator.annotations.ISBN;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,7 +17,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
-    @ISBN // Make ISBNValidator.class JSR 303 compliant.
+    @ISBN
     private String ISBN;
     @NotNull
     @NotEmpty
@@ -36,6 +34,7 @@ public class Book {
     @NotNull
     private int pages;
     @NotNull
+    @PastOrPresent
     private LocalDate published;
     private int amount;
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -44,12 +43,16 @@ public class Book {
     //Hibernate needs an empty constructor
     public Book(){}
 
-    public Book(String ISBN, String title, String description, int amount) throws ISBNIsInvalidException {
+    public Book(String ISBN, String title, String description, int pages,
+                String language, LocalDate published, int amount) {
         this.ISBN = ISBNValidator.formattingISBN(ISBN);
         this.title = title;
         this.description = description;
-        this.authors = new HashSet<>();
+        this.language = language;
+        this.pages = pages;
+        this.published = published;
         this.amount = amount;
+        this.authors = new HashSet<>();
     }
 
     @Override

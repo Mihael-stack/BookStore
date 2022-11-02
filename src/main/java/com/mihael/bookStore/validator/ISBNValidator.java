@@ -1,8 +1,26 @@
 package com.mihael.bookStore.validator;
 
 import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
+import com.mihael.bookStore.validator.annotations.ISBN;
 
-public abstract class ISBNValidator {
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+public abstract class ISBNValidator implements ConstraintValidator<ISBN, String> {
+
+    @Override
+    public void initialize(ISBN arg0){
+
+    }
+    @Override
+    public boolean isValid(String raw, ConstraintValidatorContext arg1){
+        try{
+            String checked = checkISBN(raw);
+        }catch (ISBNIsInvalidException e){
+            return false;
+        }
+        return true;
+    }
     public static String formattingISBN(String isbn){
         char[] split = isbn.toCharArray();
         StringBuilder newISBN = new StringBuilder();
@@ -75,4 +93,5 @@ public abstract class ISBNValidator {
         int finalResult = result%11;
         return finalResult == 0;
     }
+
 }
