@@ -1,5 +1,6 @@
 package com.mihael.bookStore.entity;
 
+import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 import com.mihael.bookStore.validator.ISBNValidator;
 import com.mihael.bookStore.validator.annotations.ISBN;
 
@@ -19,17 +20,13 @@ public class Book {
     @NotNull
     @ISBN
     private String ISBN;
-    @NotNull
     @NotEmpty
-    @NotBlank
     private String title;
-    @NotNull
+
     @NotEmpty
-    @NotBlank
     private String description;
-    @NotNull
+
     @NotEmpty
-    @NotBlank
     private String language;
     @NotNull
     private int pages;
@@ -37,7 +34,7 @@ public class Book {
     @PastOrPresent
     private LocalDate published;
     private int amount;
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "booksWritten", cascade = CascadeType.PERSIST)
     private Set<Author> authors;
 
     //Hibernate needs an empty constructor
@@ -81,8 +78,8 @@ public class Book {
         return ISBN;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setISBN(String ISBN) throws ISBNIsInvalidException {
+        this.ISBN = ISBNValidator.checkISBN(ISBN);
     }
 
     public String getTitle() {

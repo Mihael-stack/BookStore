@@ -1,5 +1,7 @@
 package com.mihael.bookStore.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,22 +13,20 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
+    @NotEmpty
     private String name;
-    private String alias;
-    @ManyToMany(mappedBy = "authors", cascade = CascadeType.PERSIST)
+    private String about;
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Book> booksWritten;
-
-    @OneToOne(cascade = CascadeType.REMOVE)
-    private Address address;
 
     // Hibernate needs an empty constructor
     public Author(){}
 
-    public Author(String name, String alias){
+    public Author(String name, String about){
         this.name = name;
-        this.alias = alias;
+        this.about = about;
         this.booksWritten = new HashSet<>();
-        this.address = null;
     }
 
     @Override
@@ -50,12 +50,12 @@ public class Author {
         this.name = name;
     }
 
-    public String getAlias() {
-        return alias;
+    public String getAbout() {
+        return about;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public void setBooksWritten(Set<Book> booksWritten) {
@@ -66,32 +66,8 @@ public class Author {
         this.booksWritten.add(book);
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Address getAddress() { // Use this method only if you are going to change values
-        return address;
-    }
-
-    public AddressReadOnly getAddressReadOnly(){ // Use this if you are not going ot change values
-        return address;
-    }
-
     public Set<Book> getBooksWrittenUnmodifiable() { // Unmodifiable set
         return Collections.unmodifiableSet(booksWritten);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Author author = (Author) o;
-        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && Objects.equals(alias, author.alias);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, alias);
-    }
 }

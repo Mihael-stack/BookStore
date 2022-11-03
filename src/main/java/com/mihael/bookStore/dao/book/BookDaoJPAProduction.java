@@ -57,6 +57,11 @@ public class BookDaoJPAProduction implements BookDao{
         Book oldBook = this.em.find(Book.class, newBook.getId());
         oldBook.setISBN(newBook.getISBN());
         oldBook.setTitle(newBook.getTitle());
+        oldBook.setDescription(newBook.getDescription());
+        oldBook.setLanguage(newBook.getLanguage());
+        oldBook.setPages(newBook.getPages());
+        oldBook.setAmount(newBook.getAmount());
+        oldBook.setPublished(newBook.getPublished());
         oldBook.setAuthors(newBook.getAuthorsUnmodifiable());
     }
 
