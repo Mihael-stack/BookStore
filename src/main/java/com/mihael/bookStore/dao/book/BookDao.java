@@ -14,5 +14,5 @@ public interface BookDao {
     void removeBook(Book removeBook) throws BookNotFoundException;
     List<Book> findByTitle(String title) throws BookNotFoundException;
 
-    List<Book> returnAllBooks();
+    List<Book> returnAllBooks() throws BookNotFoundException;
 }

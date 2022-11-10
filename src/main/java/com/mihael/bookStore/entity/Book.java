@@ -1,5 +1,6 @@
 package com.mihael.bookStore.entity;
 
+import com.mihael.bookStore.exceptions.AuthorMissingFromBookException;
 import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
 import com.mihael.bookStore.validator.ISBNValidator;
 import com.mihael.bookStore.validator.annotations.ISBN;
@@ -35,6 +36,7 @@ public class Book {
     private LocalDate published;
     private int amount;
     @ManyToMany(mappedBy = "booksWritten", cascade = CascadeType.PERSIST)
+    @NotEmpty
     private Set<Author> authors;
 
     //Hibernate needs an empty constructor
@@ -136,6 +138,15 @@ public class Book {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
+    }
+
+    public void addAuthors(Set<Author> authors) throws AuthorMissingFromBookException {
+        if(authors.isEmpty()){
+            throw new AuthorMissingFromBookException("Author is a required field for a Book");
+        }
+        else {
+            this.authors.addAll(authors);
+        }
     }
 
     public Set<Author> getAuthorsUnmodifiable() { // Unmodifiable Set

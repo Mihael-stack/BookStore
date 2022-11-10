@@ -13,9 +13,8 @@ public class AddressDaoJPAProduction implements AddressDao{
     private EntityManager em;
 
     @Override
-    public Address addAddress(Address address) {
+    public void addAddress(Address address) {
         this.em.persist(address);
-        return address;
     }
 
     @Override

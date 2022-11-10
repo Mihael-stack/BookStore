@@ -25,7 +25,6 @@
     </bean>
     <bean id="authorManagementService" class="com.mihael.bookStore.services.author.AuthorManagementServiceProductionImpl">
         <constructor-arg name="dao" ref="authorDao"/>
-        <constructor-arg name="addressService" ref="addressManagementService" />
     </bean>
     <bean id="bookManagementService" class="com.mihael.bookStore.services.book.BookManagementServiceProductionImpl">
         <constructor-arg name="dao" ref="bookDao"/>

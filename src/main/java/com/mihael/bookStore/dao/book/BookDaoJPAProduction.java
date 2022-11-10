@@ -48,8 +48,12 @@ public class BookDaoJPAProduction implements BookDao{
     }
 
     @Override
-    public List<Book> returnAllBooks() {
-        return this.em.createQuery("SELECT book FROM Book as book", Book.class).getResultList();
+    public List<Book> returnAllBooks() throws BookNotFoundException {
+        List<Book> list = this.em.createQuery("SELECT book FROM Book as book", Book.class).getResultList();
+        if(list.isEmpty()){
+            throw new BookNotFoundException("Books not found in database");
+        }
+        return list;
     }
 
     @Override

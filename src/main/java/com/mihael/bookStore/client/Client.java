@@ -5,7 +5,7 @@ import com.mihael.bookStore.dao.book.BookDao;
 import com.mihael.bookStore.dao.book.BookDaoJPAProduction;
 import com.mihael.bookStore.entity.Address;
 import com.mihael.bookStore.entity.Author;
-import com.mihael.bookStore.entity.Book;
+
 import com.mihael.bookStore.entity.Customer;
 import com.mihael.bookStore.exceptions.CustomerAlreadyExistWithProvidedEmailException;
 import com.mihael.bookStore.exceptions.ISBNIsInvalidException;
@@ -52,10 +52,6 @@ public class Client {
         Address address2 = new Address("21 Heroes St.","Kyiv","Ukraine","4200","Ukraine");
         Address address3 = new Address("16 DownTown","London","England","5588","United Kingdom");
 
-        authorService.addNewAuthorWithAddress(author1,address1);
-        authorService.addNewAuthorWithAddress(author2,address2);
-        authorService.addNewAuthorWithAddress(author3,address3);
-
 
     }
     public static void creatingAuthorsAuthorDao(){
@@ -70,35 +66,4 @@ public class Client {
 
 
     }
-
-    public static void creatingBooks() throws ISBNIsInvalidException {
-        //TODO:: Fix BookDao and BookManagementService
-        BookDao bookService = container.getBean("bookDao", BookDaoJPAProduction.class);
-        Book book1 = new Book("1638930163","The Empress: A Novel");
-        Book book2 = new Book("0804176604","Devotion: An Epic Story of Heroism, Friendship, and Sacrifice");
-        Book book3 = new Book("978-1524796303","Fire & Blood: 300 Years Before A Game of Thrones");
-        Book book4 = new Book("978-0399226908","The Very Hungry Caterpillar");
-        Book book5 = new Book("0805047905","rown Bear, Brown Bear, What Do You See?");
-
-        bookService.addBook(book1);
-        bookService.addBook(book2);
-        bookService.addBook(book3);
-        bookService.addBook(book4);
-        bookService.addBook(book5);
-
-    }
-//    public static void creatingBooksWithAuthors() throws ISBNIsInvalidException {
-//        BookAndAuthorManagementService bookAndAuthorManagementService = container.getBean("bookAndAuthorManagementService",BookAndAuthorManagementServiceProductionImpl.class);
-//
-//        Book book1 = new Book("1637970137","Fly High");
-//        Book book2 = new Book("0804176604","Devotion: An Epic Story of Heroism, Friendship, and Sacrifice");
-//        Book book3 = new Book("978-1524796303","Fire & Blood: 300 Years Before A Game of Thrones");
-//        Author author1 = new Author("Janet K. Johnson", "Jennet");
-//        Author author2 = new Author("Michelle Medlock Adams", "Medlock");
-//
-//        bookAndAuthorManagementService.addAuthorWithBook(author1, book1);
-//        bookAndAuthorManagementService.addAuthorWithBook(author1, book3);
-//        bookAndAuthorManagementService.addBookWithAuthor(book2,author2);
-//        bookAndAuthorManagementService.addBookWithAuthor(book1,author2);
-//    }
 }

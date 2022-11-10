@@ -1,11 +1,10 @@
 package com.mihael.bookStore.entity;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -16,8 +15,10 @@ public class Author {
     @Column(unique = true)
     @NotEmpty
     private String name;
+    @NotEmpty
     private String about;
     @ManyToMany(cascade = CascadeType.PERSIST)
+    @NotEmpty
     private Set<Book> booksWritten;
 
     // Hibernate needs an empty constructor
